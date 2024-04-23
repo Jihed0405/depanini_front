@@ -38,9 +38,11 @@ class _HomeViewState extends State<HomeView> {
             children: [
             // Title section
             Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(8.0),
       child: Row(
         children: [
+          Image.asset('assets/person/logo.jpg',width: 70,
+                  height: 70,),
           Text(
             'Depanini',
             style: TextStyle(
@@ -48,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Icon(Icons.access_alarms_rounded), // Symbol of repair
+         
         ],
       ),
             ),
