@@ -28,6 +28,10 @@ class _ServicesState extends ConsumerState<Services> {
   Widget build(BuildContext context) {
     print("helllooo ${ref.watch(categoryIdProvider)}");
      _serviceFuture = _serviceService.getServicesByIdCategory(ref.watch(categoryIdProvider));
+    
+
+      
+   
     return SafeArea(
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -70,7 +74,10 @@ class _ServicesState extends ConsumerState<Services> {
                   );
                 } else {
                   final categoryList = snapshot.data!;
-      
+      if(categoryList.isEmpty){
+       return Text("No Service for this category  ");
+      }
+      else{
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
@@ -89,7 +96,7 @@ class _ServicesState extends ConsumerState<Services> {
                       );
                     },
                     itemCount: categoryList.length,
-                  );
+                  );}
                 }
               },
             ),
@@ -97,6 +104,6 @@ class _ServicesState extends ConsumerState<Services> {
           ],
         ),
       ),
-    );
+    );}
   }
-}
+
