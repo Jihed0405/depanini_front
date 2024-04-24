@@ -9,7 +9,7 @@ class ServiceProviderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.amber[50],
+      color:Colors.white70,
       margin: EdgeInsets.all(16.0),
       child: Padding(
         padding: EdgeInsets.all(16.0),
@@ -53,7 +53,7 @@ class ServiceProviderCard extends StatelessWidget {
                   Row(
                     children: List.generate(
                       serviceProvider.stars,
-                      (index) => Icon(Icons.star, color: Colors.yellow),
+                      (index) => Icon(Icons.star, color:Color(0xFFebab01)),
                     ),
                   ),
                   SizedBox(height: 8.0),

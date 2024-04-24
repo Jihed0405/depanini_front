@@ -1,4 +1,3 @@
-import 'package:depanini_front/constants/color.dart';
 import 'package:depanini_front/models/category.dart';
 import 'package:depanini_front/services/categoryService.dart';
 import 'package:depanini_front/widgets/categoryCard.dart';
@@ -23,7 +22,7 @@ class _CategoriesState extends State<Categories> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SafeArea(
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -38,9 +37,15 @@ class _CategoriesState extends State<Categories> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Explore Categories",
-                    style: Theme.of(context).textTheme.bodyLarge,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Explore Categories",
+                      style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+                    ),
                   ),
                 
                 ],
@@ -59,14 +64,14 @@ class _CategoriesState extends State<Categories> {
                   );
                 } else {
                   final categoryList = snapshot.data!;
-
+      
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     gridDelegate:
                         SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
-                      childAspectRatio: 0.8,
+                      childAspectRatio: 0.9,
                       crossAxisSpacing: 15,
                       mainAxisSpacing: 15,
                     ),
@@ -74,7 +79,7 @@ class _CategoriesState extends State<Categories> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 5, vertical: 5),
-                        child: Container(constraints: BoxConstraints(maxHeight: 400,maxWidth: 500),child: CategoryCard(category: categoryList[index])),
+                        child: CategoryCard(category: categoryList[index]),
                       );
                     },
                     itemCount: categoryList.length,

@@ -77,21 +77,19 @@ final VoidCallback onTap;
 }
 
 class _CategoryTileState extends State<CategoryTile> {
-   bool _isSelected = false;
+  
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        setState(() {
-          _isSelected = !_isSelected;
-        });
+      
          widget.onTap();
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.0),
         child: Container(
           height: 200,
-          color: _isSelected ? Colors.grey.withOpacity(0.5) : Colors.transparent,
+          color:  Colors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

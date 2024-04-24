@@ -41,7 +41,7 @@ class _HomeViewState extends State<HomeView> {
       padding: EdgeInsets.all(8.0),
       child: Row(
         children: [
-          Image.asset('assets/person/logo.jpg',width: 70,
+          Image.asset('assets/person/logo.png',width: 70,
                   height: 70,),
           Text(
             'Depanini',

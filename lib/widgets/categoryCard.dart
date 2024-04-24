@@ -13,57 +13,40 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const SearchView(),
-        ),
-      ),
-      child: Expanded(
-        child: Container(
-         
-        
-          decoration: BoxDecoration(
-            
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(.1),
-                blurRadius: 4.0,
-                spreadRadius: .05,
-              ),
-            ],
-          ),
-          child: Expanded(
-            child: Container(
-            
-              child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      category.imagePath,
-                      height: 60,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Expanded(
-                   // height: 100,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        category.name,
-                        textAlign: TextAlign.center,
-                       style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+      onTap: () {},
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(.1),
+              blurRadius: 4.0,
+              spreadRadius: .05,
             ),
+          ],
+          border: Border.all(
+            color: Colors.grey, // Border color
+            width: 1, // Border width
           ),
+        ),
+        padding: EdgeInsets.all(5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              category.imagePath,
+              height: 60,
+            ),
+            SizedBox(height: 5),
+            Text(
+              category.name,
+              maxLines: 2, // Limit to 2 lines
+  overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ],
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:depanini_front/widgets/categories.dart';
 import 'package:flutter/material.dart';
 
 class SearchView extends StatefulWidget {
@@ -10,6 +11,6 @@ class SearchView extends StatefulWidget {
 class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
-   return Scaffold(body: Center(child: Text('Search')));
+   return Categories();
   }
 }
