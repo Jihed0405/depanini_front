@@ -19,7 +19,7 @@ class ProfileAccountInfoTile extends StatelessWidget {
         horizontalTitleGap: 0,
         leading: Padding(
           padding: const EdgeInsets.only(
-              left: 0, top: defaultSpacing / 2),
+              left: 0, top: defaultSpacing / 2,right:defaultSpacing ),
           child: Image.asset(imageUrl),
         ),
         contentPadding: const EdgeInsets.all(0),

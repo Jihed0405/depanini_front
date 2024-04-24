@@ -10,7 +10,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 // return 'Hello orlds';
 // }
 void main() {
-  runApp(ProviderScope(child: MaterialApp(home: MyApp())));
+  runApp(ProviderScope(child:MyApp()));
 }
 
   class MyApp extends StatefulWidget {
@@ -25,8 +25,8 @@ class _MyAppState extends State<MyApp> {
   GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-  return MaterialApp(
-title:'Depanin',
+  return MaterialApp(debugShowCheckedModeBanner: false,
+title:'Depanini',
 theme: ThemeData(
   colorScheme:ColorScheme.fromSwatch(backgroundColor: Colors.white),
    textTheme: TextTheme(
@@ -44,6 +44,7 @@ theme: ThemeData(
 home: SafeArea(
     top: false,
     child: Scaffold(
+      
           bottomNavigationBar: CurvedNavigationBar(
             key: _bottomNavigationKey,
             index: 0,

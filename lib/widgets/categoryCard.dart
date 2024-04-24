@@ -1,9 +1,12 @@
 import 'package:depanini_front/constants/size.dart';
 import 'package:depanini_front/models/category.dart';
+import 'package:depanini_front/provider/provider.dart';
 import 'package:depanini_front/views/search/search_view.dart';
+import 'package:depanini_front/views/service/ServiceScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CategoryCard extends StatelessWidget {
+class CategoryCard extends ConsumerWidget {
   final Category category;
   const CategoryCard({
     Key? key,
@@ -11,9 +14,16 @@ class CategoryCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        print ('Category tapped${category.id}');
+        ref.read(categoryIdProvider);
+       Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ServiceScreen()),
+              );
+      },
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,

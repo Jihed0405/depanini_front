@@ -26,18 +26,8 @@ class _ProfileViewState extends State<ProfileView> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: background,
-        leading: IconButton(
-        icon:   const Icon(
-          Icons.arrow_back_ios,
-          color: fontDark,
-          
-        ),
-        onPressed: (){
-          
-        },),
-        actions: const [
-          Image(image: AssetImage("assets/images/settings.png"))
-        ],
+        
+        
       ),
       body:SingleChildScrollView(
       child:Column(
@@ -83,13 +73,7 @@ class _ProfileViewState extends State<ProfileView> {
                       const SizedBox(
                         height: 2 * defaultSpacing / 3,
                       ),
-                      const Chip(
-                        backgroundColor: primaryLight,
-                        label: Text(
-                          "Edit Profile",
-                        ),
-                        labelStyle: TextStyle(color: primaryGreen),
-                      ),
+                     
                     ])),
               ],
             )),
@@ -119,9 +103,9 @@ class _ProfileViewState extends State<ProfileView> {
                     title: 'Adress',
                     subTitle: 'Rue ramla 5111 mahdia Tunisia'),
                 const ProfileAccountInfoTile(
-                    imageUrl: 'assets/images/wallet.png',
-                    title: 'My Wallet',
-                    subTitle: 'Manage your saved wallet'),
+                    imageUrl: 'assets/images/info-circle.png',
+                    title: 'Edit  personal information',
+                    subTitle: 'Manage your information '),
                 const SizedBox(
                   height: defaultSpacing,
                 ),
