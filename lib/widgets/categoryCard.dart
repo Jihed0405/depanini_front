@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CategoryCard extends ConsumerWidget {
-  final Category category;
+  final  category;
   const CategoryCard({
     Key? key,
     required this.category,
@@ -15,10 +15,13 @@ class CategoryCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+    print("jihed${ref.watch(categoryIdProvider)}");
     return GestureDetector(
       onTap: () {
         print ('Category tapped${category.id}');
-        ref.read(categoryIdProvider);
+        int  catId = category.id!;
+ref.read(categoryIdProvider.notifier).add(catId);
+        
        Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ServiceScreen()),
