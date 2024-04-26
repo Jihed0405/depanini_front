@@ -16,11 +16,14 @@ class CategoryCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     print("jihed${ref.watch(categoryIdProvider)}");
+      print("jihed${ref.watch(categoryNameProvider)}");
     return GestureDetector(
       onTap: () {
         print ('Category tapped${category.id}');
         int  catId = category.id!;
+        String categoryName = category.name!;
 ref.read(categoryIdProvider.notifier).add(catId);
+ref.read(categoryNameProvider.notifier).add(categoryName);
         
        Navigator.push(
                 context,

@@ -17,11 +17,16 @@ class ServiceCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     print("providers${ref.watch(serviceIdProvider)}");
+     print("providers${ref.watch(serviceNameProvider)}");
     return GestureDetector(
       onTap: () {
         print ('Category tapped${service.id}');
+          String  name =service.name!;
+        print("service name = $name");
         int  serviceId = service.id!;
+      
 ref.read(serviceIdProvider.notifier).add(serviceId);
+ref.read(serviceNameProvider.notifier).add(name);
       
        Navigator.push(
                 context,

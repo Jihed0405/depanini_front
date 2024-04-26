@@ -1,4 +1,5 @@
 import 'package:depanini_front/models/category.dart';
+import 'package:depanini_front/provider/provider.dart';
 import 'package:depanini_front/services/categoryService.dart';
 import 'package:depanini_front/widgets/categories.dart';
 import 'package:depanini_front/widgets/services.dart';
@@ -26,7 +27,7 @@ class _ServiceScreenState extends ConsumerState<ServiceView> {
       data: Theme.of(context), // Inherit the theme from the parent context
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Services',
+          title: Text('${ref.watch(categoryNameProvider)}',
              style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,

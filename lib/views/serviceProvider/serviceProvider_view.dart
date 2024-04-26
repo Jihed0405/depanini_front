@@ -24,12 +24,13 @@ class _ServiceScreenState extends ConsumerState<ServiceProviderView> {
    @override
   Widget build(BuildContext context) {
         print("helllooo ${ref.watch(serviceIdProvider)}");
+           print("the name is jihed  ${ref.watch(serviceNameProvider)}");
      _serviceProviderFuture = _serviceProvidersService.getProvidersByServiceId(ref.watch(serviceIdProvider));
     return Theme(
       data: Theme.of(context), // Inherit the theme from the parent context
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Service Providers',
+          title: Text('${ref.watch(serviceNameProvider)}',
              style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,

@@ -10,6 +10,15 @@ class CategoryId extends _$CategoryId{
   }
   
 }
+@riverpod
+class CategoryName extends _$CategoryName{
+ @override
+  String build ()=> '';
+  void add(String newName) {
+    state = newName; 
+  }
+  
+}
 
 @riverpod
 class ServiceId extends _$ServiceId{
@@ -17,6 +26,17 @@ class ServiceId extends _$ServiceId{
   int build ()=> 3;
   void add(int newId) {
     state = newId; 
+  }
+  
+}
+
+
+@riverpod
+class ServiceName extends _$ServiceName{
+ @override
+  String build ()=> '';
+  void add(String newName) {
+    state = newName; 
   }
   
 }
