@@ -10,3 +10,14 @@ class CategoryId extends _$CategoryId{
   }
   
 }
+
+@riverpod
+class ServiceId extends _$ServiceId{
+ @override
+  int build ()=> 3;
+  void add(int newId) {
+    state = newId; 
+  }
+  
+}
+

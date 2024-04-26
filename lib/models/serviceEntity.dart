@@ -16,7 +16,18 @@ class ServiceEntity {
       break;
       case 'moving':
       imagePath='assets/images/moving-truck.png';
-        break;    
+        break; 
+        case 'electricity'  :
+        imagePath='assets/images/electrical-energy.png'; 
+        break;
+        case 'plumbing'  :
+        imagePath='assets/images/plumbing.png'; 
+        break;
+        case 'window cleaning'  :
+        imagePath='assets/images/window-cleaning.png'; 
+        break;
+        
+        
      default : 
        imagePath='assets/images/default_category.png';
   }

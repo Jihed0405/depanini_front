@@ -4,16 +4,15 @@ import 'package:depanini_front/widgets/categories.dart';
 import 'package:depanini_front/widgets/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-class ServiceScreen extends ConsumerStatefulWidget {
-  const ServiceScreen({super.key});
+class ServiceView extends ConsumerStatefulWidget {
+  const ServiceView({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ServiceScreenState();
 }
 
-class _ServiceScreenState extends ConsumerState<ServiceScreen> {
- final CategoryService _categoryService = CategoryService();
-  late Future<List<Category>> _categoryFuture;
+class _ServiceScreenState extends ConsumerState<ServiceView> {
+
 
    @override
   void initState() {

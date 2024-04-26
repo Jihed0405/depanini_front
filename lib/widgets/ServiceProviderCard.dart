@@ -1,13 +1,14 @@
 import 'package:depanini_front/models/serviceProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ServiceProviderCard extends StatelessWidget {
+class ServiceProviderCard extends ConsumerWidget {
   final ServiceProvider serviceProvider;
 
   const ServiceProviderCard({Key? key, required this.serviceProvider}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     return Card(
       color:Colors.white70,
       margin: EdgeInsets.all(16.0),
@@ -21,7 +22,7 @@ class ServiceProviderCard extends StatelessWidget {
               width: 100,
               height: 100,
               child: Image.asset(
-                serviceProvider.image,
+                serviceProvider.photoUrl,
                 fit: BoxFit.cover,
               ),
             ),
@@ -33,7 +34,7 @@ class ServiceProviderCard extends StatelessWidget {
                 children: [
                   // Name
                   Text(
-                    serviceProvider.name,
+                    serviceProvider.firstName,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

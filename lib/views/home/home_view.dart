@@ -5,20 +5,18 @@ import 'package:depanini_front/widgets/category_list_view.dart';
 import 'package:flutter/material.dart';
 List<ServiceProvider> serviceProviderList = [
   ServiceProvider(
-    name: 'Service Provider 1',
-    location: 'Location 1',
-    distance: 2.5,
-    stars: 4,
-    image: 'assets/person/service_provider_1.jpg',
-    commentary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    id:0,
+    lastName:"Darryl Depanini",
+    firstName: 'Service Provider 1',
+    
+    photoUrl: 'assets/person/service_provider_1.jpg',
+     email: 'ded@fefeef', phoneNumber: '94515151', bio: 'deeddeffef', numberOfExperiences: 10,
   ),
   ServiceProvider(
-    name: 'Service Provider 2',
-    location: 'Location 2',
-    distance: 3.2,
-    stars: 5,
-    image: 'assets/person/service_provider_2.jpg',
-    commentary: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    firstName: 'Service Provider 2',
+  
+    photoUrl: 'assets/person/service_provider_2.jpg',
+ id: 1, lastName: '', email: '@gmail.com', phoneNumber: '9899999', bio: 'eddeded', numberOfExperiences: 10,
   ),
   // Add more service providers as needed
 ];
@@ -57,7 +55,7 @@ class _HomeViewState extends State<HomeView> {
             Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Text(
-        'Find a Pro',
+        'Most qualified Providers',
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,

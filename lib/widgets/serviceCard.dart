@@ -3,28 +3,29 @@ import 'package:depanini_front/models/category.dart';
 import 'package:depanini_front/provider/provider.dart';
 import 'package:depanini_front/views/search/search_view.dart';
 import 'package:depanini_front/views/service/service_view.dart';
+import 'package:depanini_front/views/serviceProvider/serviceProvider_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CategoryCard extends ConsumerWidget {
-  final  category;
-  const CategoryCard({
+class ServiceCard extends ConsumerWidget {
+  final  service;
+  const ServiceCard({
     Key? key,
-    required this.category,
+    required this.service,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
-    print("jihed${ref.watch(categoryIdProvider)}");
+    print("providers${ref.watch(serviceIdProvider)}");
     return GestureDetector(
       onTap: () {
-        print ('Category tapped${category.id}');
-        int  catId = category.id!;
-ref.read(categoryIdProvider.notifier).add(catId);
-        
+        print ('Category tapped${service.id}');
+        int  serviceId = service.id!;
+ref.read(serviceIdProvider.notifier).add(serviceId);
+      
        Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ServiceView()),
+                MaterialPageRoute(builder: (context) => ServiceProviderView()),
               );
       },
       child: Container(
@@ -48,12 +49,12 @@ ref.read(categoryIdProvider.notifier).add(catId);
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              category.imagePath,
+              service.imagePath,
               height: 60,
             ),
             SizedBox(height: 5),
             Text(
-              category.name,
+              service.name,
               maxLines: 2, // Limit to 2 lines
   overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,

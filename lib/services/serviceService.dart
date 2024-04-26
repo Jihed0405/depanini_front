@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class ServiceService {
   static const String baseUrl = 'http://192.168.1.52:8080/api/categories';
 
-  Future<List<ServiceEntity>> getServicesByIdCategory(int id) async {
+  Future<List<ServiceEntity>> getServicesByCategoryId(int id) async {
     print('this is the fkn id $id');
     final response = await http.get(Uri.parse('$baseUrl/$id/services'));
 print("the response is ${response.body}");

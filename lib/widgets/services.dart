@@ -4,6 +4,7 @@ import 'package:depanini_front/provider/provider.dart';
 import 'package:depanini_front/services/categoryService.dart';
 import 'package:depanini_front/services/serviceService.dart';
 import 'package:depanini_front/widgets/categoryCard.dart';
+import 'package:depanini_front/widgets/serviceCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,7 +28,7 @@ class _ServicesState extends ConsumerState<Services> {
   @override
   Widget build(BuildContext context) {
     print("helllooo ${ref.watch(categoryIdProvider)}");
-     _serviceFuture = _serviceService.getServicesByIdCategory(ref.watch(categoryIdProvider));
+     _serviceFuture = _serviceService.getServicesByCategoryId(ref.watch(categoryIdProvider));
     
 
       
@@ -73,8 +74,8 @@ class _ServicesState extends ConsumerState<Services> {
                         'Failed to load Services. Please try again later.'),
                   );
                 } else {
-                  final categoryList = snapshot.data!;
-      if(categoryList.isEmpty){
+                  final serviceList = snapshot.data!;
+      if(serviceList.isEmpty){
        return Text("No Service for this category  ");
       }
       else{
@@ -92,10 +93,10 @@ class _ServicesState extends ConsumerState<Services> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 5, vertical: 5),
-                        child: CategoryCard(category: categoryList[index]),
+                        child: ServiceCard(service: serviceList[index]),
                       );
                     },
-                    itemCount: categoryList.length,
+                    itemCount: serviceList.length,
                   );}
                 }
               },
