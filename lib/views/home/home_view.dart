@@ -1,25 +1,10 @@
   import 'package:depanini_front/models/serviceProvider.dart';
+import 'package:depanini_front/services/serviceProvidersService.dart';
 import 'package:depanini_front/widgets/ServiceProviderCard.dart';
 import 'package:depanini_front/widgets/categories.dart';
 import 'package:depanini_front/widgets/category_list_view.dart';
 import 'package:flutter/material.dart';
-List<ServiceProvider> serviceProviderList = [
-  ServiceProvider(
-    id:0,
-    lastName:"Darryl Depanini",
-    firstName: 'Service Provider 1',
-    
-    photoUrl: 'assets/person/service_provider_1.jpg',
-     email: 'ded@fefeef', phoneNumber: '94515151', bio: 'deeddeffef', numberOfExperiences: 10,
-  ),
-  ServiceProvider(
-    firstName: 'Service Provider 2',
-  
-    photoUrl: 'assets/person/service_provider_2.jpg',
- id: 1, lastName: '', email: '@gmail.com', phoneNumber: '9899999', bio: 'eddeded', numberOfExperiences: 10,
-  ),
-  // Add more service providers as needed
-];
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -28,8 +13,11 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+   final ServiceProvidersService _serviceProvidersService = ServiceProvidersService();
+  late Future<List<ServiceProvider>> _serviceProviderFuture;
   @override
   Widget build(BuildContext context) {
+    _serviceProviderFuture = _serviceProvidersService.getServiceProviders();
     return SafeArea(
       child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -63,14 +51,30 @@ class _HomeViewState extends State<HomeView> {
       ),
             ),
             // Service provider cards
-            Expanded(
+
+          FutureBuilder<List<ServiceProvider>>(
+            future: _serviceProviderFuture,
+             builder: (context,snapshot){
+               if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return Center(
+                    child: Text(
+                        'Failed to load most qualified Service Providers. Please try again later.'),
+                  );
+                } else {final serviceProviderList = snapshot.data!;
+          return Expanded(
       child: ListView.builder(
         itemCount: serviceProviderList.length,
         itemBuilder: (context, index) {
           return ServiceProviderCard(serviceProvider: serviceProviderList[index]);
         },
       ),
-            ),
+            );
+                }
+             }),
+  
             ],
           )
     );
