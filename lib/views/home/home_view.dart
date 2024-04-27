@@ -19,7 +19,25 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     _serviceProviderFuture = _serviceProvidersService.getServiceProviders();
     return SafeArea(
-      child: Column(
+
+
+
+      
+      child: 
+           FutureBuilder<List<ServiceProvider>>(
+            future: _serviceProviderFuture,
+             builder: (context,snapshot){
+               if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return Center(
+                    child: Text(
+                        'Failed to load most qualified Service Providers. Please try again later.'),
+                  );
+                } else {final serviceProviderList = snapshot.data!;
+          return
+          Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
             // Title section
@@ -52,31 +70,26 @@ class _HomeViewState extends State<HomeView> {
             ),
             // Service provider cards
 
-          FutureBuilder<List<ServiceProvider>>(
-            future: _serviceProviderFuture,
-             builder: (context,snapshot){
-               if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  print(snapshot.error);
-                  return Center(
-                    child: Text(
-                        'Failed to load most qualified Service Providers. Please try again later.'),
-                  );
-                } else {final serviceProviderList = snapshot.data!;
-          return Expanded(
+     
+           Expanded(
       child: ListView.builder(
         itemCount: serviceProviderList.length,
         itemBuilder: (context, index) {
           return ServiceProviderCard(serviceProvider: serviceProviderList[index]);
         },
       ),
-            );
-                }
-             }),
+            )
   
             ],
-          )
+          );
+          
+                }
+             }),
+      
+      
+      
+      
+      
     );
 }
 

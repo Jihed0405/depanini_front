@@ -23,7 +23,21 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
+      child: 
+      FutureBuilder<List<Category>>(
+              future: _categoryFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                        'Failed to load categories. Please try again later.'),
+                  );
+                } else {
+                  final categoryList = snapshot.data!;
+       
+      return SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
@@ -50,22 +64,7 @@ class _CategoriesState extends State<Categories> {
                 
                 ],
               ),
-            ),
-        
-            FutureBuilder<List<Category>>(
-              future: _categoryFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                        'Failed to load categories. Please try again later.'),
-                  );
-                } else {
-                  final categoryList = snapshot.data!;
-      
-                  return GridView.builder(
+            ), GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     gridDelegate:
@@ -83,14 +82,19 @@ class _CategoriesState extends State<Categories> {
                       );
                     },
                     itemCount: categoryList.length,
-                  );
-                }
-              },
-            ),
+                  ),
+        
+            
             const SizedBox(height: 30),
           ],
         ),
-      ),
+      );
+                  
+                }
+              },
+            ),
+      
+     
     );
   }
 }
