@@ -1,5 +1,7 @@
 import 'package:depanini_front/constants/color.dart';
 import 'package:depanini_front/constants/size.dart';
+import 'package:depanini_front/models/user.dart';
+import 'package:depanini_front/services/userService.dart';
 import 'package:depanini_front/widgets/profile_account_info_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -11,14 +13,11 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-    var userData= (
-  name:"Ben othmen",
-  firstName:"Jihed",
-  email:"jihed.benothmen@polytechnicien.tn",
-  
-);
+     final UserService _userService = UserService();
+  late Future<User> _userServiceFuture;
   @override
   Widget build(BuildContext context) {
+     _userServiceFuture = _userService.getUserById(7);
     return Scaffold(
       
       backgroundColor: background,
@@ -29,7 +28,19 @@ class _ProfileViewState extends State<ProfileView> {
         
         
       ),
-      body:SingleChildScrollView(
+      body:
+          FutureBuilder<User>( future: _userServiceFuture,
+             builder: (context,snapshot){
+               if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return Center(
+                    child: Text(
+                        'Failed to load user . Please try again later.'),
+                  );
+                } else {final  userData= snapshot.data!;
+  return SingleChildScrollView(
       child:Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +52,7 @@ class _ProfileViewState extends State<ProfileView> {
                   borderRadius:
                       const BorderRadius.all(Radius.circular(defaultRadius)),
                   child: Image.asset(
-                    "assets/person/avatar.jpg",
+                    "${userData.photoUrl}",
                     width: 100,
                   ),
                 ),
@@ -52,7 +63,7 @@ class _ProfileViewState extends State<ProfileView> {
                     borderRadius: const BorderRadius.all(Radius.zero),
                     child: Column(children: [
                       Text(
-                        "${userData.firstName} ${userData.name}",
+                        "${userData.firstName} ${userData.lastName}",
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -98,10 +109,10 @@ class _ProfileViewState extends State<ProfileView> {
                 const SizedBox(
                   height: defaultSpacing / 4,
                 ),
-                const ProfileAccountInfoTile(
+                 ProfileAccountInfoTile(
                     imageUrl: 'assets/images/location-1.png',
                     title: 'Adress',
-                    subTitle: 'Rue ramla 5111 mahdia Tunisia'),
+                    subTitle: userData.address),
                 const ProfileAccountInfoTile(
                     imageUrl: 'assets/images/info-circle.png',
                     title: 'Edit  personal information',
@@ -151,6 +162,11 @@ class _ProfileViewState extends State<ProfileView> {
           )
         ],
       ),
-    ),);
+    );
+  }}
+  ),);
+  
+      
   }
-  }
+  
+}
