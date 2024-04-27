@@ -41,3 +41,13 @@ class ServiceName extends _$ServiceName{
   
 }
 
+
+@riverpod
+class ServiceProviderId extends _$ServiceProviderId{
+ @override
+  int build ()=> 3;
+  void add(int newId) {
+    state = newId; 
+  }
+  
+}

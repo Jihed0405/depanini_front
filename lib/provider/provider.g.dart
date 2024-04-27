@@ -65,5 +65,21 @@ final serviceNameProvider =
 );
 
 typedef _$ServiceName = AutoDisposeNotifier<String>;
+String _$serviceProviderIdHash() => r'7fe6f8e7298a12853fb7a744134adf201a2b9d11';
+
+/// See also [ServiceProviderId].
+@ProviderFor(ServiceProviderId)
+final serviceProviderIdProvider =
+    AutoDisposeNotifierProvider<ServiceProviderId, int>.internal(
+  ServiceProviderId.new,
+  name: r'serviceProviderIdProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$serviceProviderIdHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ServiceProviderId = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
