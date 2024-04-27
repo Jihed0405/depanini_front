@@ -27,6 +27,7 @@ class _ServiceScreenState extends ConsumerState<ServiceView> {
       data: Theme.of(context), // Inherit the theme from the parent context
       child: Scaffold(
         appBar: AppBar(
+           centerTitle: true,
           title: Text('${ref.watch(categoryNameProvider)}',
              style: TextStyle(
           fontSize: 18,

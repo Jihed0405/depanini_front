@@ -51,3 +51,13 @@ class ServiceProviderId extends _$ServiceProviderId{
   }
   
 }
+
+@riverpod
+class ServiceProviderName extends _$ServiceProviderName{
+ @override
+  String build ()=> '';
+  void add(String newName) {
+    state = newName; 
+  }
+  
+}
