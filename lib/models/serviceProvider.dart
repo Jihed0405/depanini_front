@@ -28,7 +28,7 @@ class ServiceProvider {
   
     distance = 2.5; 
 commentary= '';
-    stars=1;
+    stars=4;
   }
   factory ServiceProvider.fromJson(Map<String, dynamic> json) {
     return ServiceProvider(

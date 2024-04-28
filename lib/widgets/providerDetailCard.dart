@@ -11,7 +11,7 @@ class ProviderDetailCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
-   
+   final starsToShow = serviceProvider.stars < 0 ? 0 : serviceProvider.stars;
 
     return Card(
       color:Colors.white70,
@@ -55,12 +55,16 @@ class ProviderDetailCard extends ConsumerWidget {
                     ],
                   ),
                   // Stars
-                  Row(
-                    children: List.generate(
-                      serviceProvider.stars,
-                      (index) => Icon(Icons.star, color:Color(0xFFebab01)),
-                    ),
-                  ),
+                Row(children: [
+                      ...List.generate(
+                        starsToShow > 5 ? 0 : starsToShow,
+                        (index) => Icon(Icons.star, color: Color(0xFFebab01)),
+                      ),
+                      ...List.generate(
+                        starsToShow > 5 ? 5 : 5 - starsToShow,
+                        (index) => Icon(Icons.star, color: Colors.grey),
+                      ),
+                    ]),
                   SizedBox(height: 8.0),
                   // Commentary
                   Text(serviceProvider.commentary),
