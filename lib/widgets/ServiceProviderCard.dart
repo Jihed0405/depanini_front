@@ -62,7 +62,7 @@ ref.read(serviceProviderIdProvider.notifier).add(providerId);
                     // Location and distance
                     Row(
                       children: [
-                        Text(serviceProvider.location),
+                        Text(serviceProvider?.address??""),
                         SizedBox(width: 8.0),
                         Icon(Icons.location_on),
                         SizedBox(width: 4.0),
@@ -71,10 +71,16 @@ ref.read(serviceProviderIdProvider.notifier).add(providerId);
                     ),
                     // Stars
                     Row(
-                      children: List.generate(
-                        serviceProvider.stars,
-                        (index) => Icon(Icons.star, color:Color(0xFFebab01)),
-                      ),
+    children: [
+    ...List.generate(
+      serviceProvider.stars > 5 ? 0 : serviceProvider.stars < 0 ? 0 : serviceProvider.stars,
+      (index) => Icon(Icons.star, color: Color(0xFFebab01)),
+    ),
+    ...List.generate(
+      serviceProvider.stars > 5 ? 5 : 5 - serviceProvider.stars < 0 ? 0 : serviceProvider.stars,
+      (index) => Icon(Icons.star, color: Colors.grey),
+    ),
+  ]
                     ),
                     SizedBox(height: 8.0),
                     // Commentary

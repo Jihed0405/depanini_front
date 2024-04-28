@@ -60,9 +60,12 @@ return Theme(
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   print(snapshot.error);
-                  return Center(
-                    child: Text(
-                        'Failed to load Provider. Please try again later.'),
+                  return Padding(
+                     padding: const EdgeInsets.only(left:32.0),
+                    child: Center(
+                      child: Text(
+                          'Failed to load Provider. Please try again later.'),
+                    ),
                   );
                 } else {
                   final serviceProvider = snapshot.data;
@@ -80,6 +83,7 @@ return Theme(
               },
             ),
              const SizedBox(height: 30),
+             
           ],
         ),
       ),

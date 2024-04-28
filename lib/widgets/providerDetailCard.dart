@@ -47,7 +47,7 @@ class ProviderDetailCard extends ConsumerWidget {
                   // Location and distance
                   Row(
                     children: [
-                      Text(serviceProvider.location),
+                       Text(serviceProvider?.address??""),
                       SizedBox(width: 8.0),
                       Icon(Icons.location_on),
                       SizedBox(width: 4.0),

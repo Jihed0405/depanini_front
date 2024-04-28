@@ -31,9 +31,12 @@ class _HomeViewState extends State<HomeView> {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   print(snapshot.error);
-                  return Center(
-                    child: Text(
-                        'Failed to load most qualified Service Providers. Please try again later.'),
+                  return Padding(
+                    padding: const EdgeInsets.only(left:32.0),
+                    child: Center(
+                      child: Text(
+                          'Failed to load most qualified Service Providers. Please try again later.'),
+                    ),
                   );
                 } else {final serviceProviderList = snapshot.data!;
           return

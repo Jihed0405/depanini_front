@@ -2,7 +2,7 @@ class ServiceProvider {
     final int id;
   final String firstName;
   final String lastName;
-  late String location;
+  final String? address;
   late double distance;
   late int stars;
   final String email;
@@ -20,28 +20,26 @@ class ServiceProvider {
     required this.phoneNumber,
     required this.bio,
     required this.photoUrl,
+    required this.address,
    
     required this.numberOfExperiences,
     
   }){
-    location = 'Location 1';
+  
     distance = 2.5; 
-commentary= 'ipsum dolor sit amet, consectetur adipiscing elit';
-    stars=4;
+commentary= '';
+    stars=1;
   }
   factory ServiceProvider.fromJson(Map<String, dynamic> json) {
     return ServiceProvider(
       id: json['id'],
       firstName: json['firstName'],
       lastName: json['lastName'],
-      
-      
-      
+      address: json['address'],
       email: json['email'],
       phoneNumber: json['phoneNumber'],
       bio: json['bio'],
       photoUrl: json['photoUrl'],
-      
       numberOfExperiences: json['numberOfExperiences'],
     );
   }

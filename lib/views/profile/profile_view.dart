@@ -35,9 +35,12 @@ class _ProfileViewState extends State<ProfileView> {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   print(snapshot.error);
-                  return Center(
-                    child: Text(
-                        'Failed to load user . Please try again later.'),
+                  return Padding(
+                     padding: const EdgeInsets.only(left:32.0),
+                    child: Center(
+                      child: Text(
+                          'Failed to load user . Please try again later.'),
+                    ),
                   );
                 } else {final  userData= snapshot.data!;
   return SingleChildScrollView(

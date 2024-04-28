@@ -69,9 +69,12 @@ class _ServicesState extends ConsumerState<Services> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                        'Failed to load Services. Please try again later.'),
+                  return Padding(
+                   padding: const EdgeInsets.only(left:32.0),
+                    child: Center(
+                      child: Text(
+                          'Failed to load Services. Please try again later.'),
+                    ),
                   );
                 } else {
                   final serviceList = snapshot.data!;
