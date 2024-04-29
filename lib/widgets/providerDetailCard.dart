@@ -7,18 +7,26 @@ import 'package:depanini_front/services/ratingService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProviderDetailCard extends ConsumerWidget {
+class ProviderDetailCard extends ConsumerStatefulWidget {
   final ServiceProvider serviceProvider;
+ ProviderDetailCard({Key? key, required this.serviceProvider}) : super(key: key);
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _ServiceProviderDetailsViewState();}
+  class _ServiceProviderDetailsViewState extends ConsumerState<ProviderDetailCard> {
+  
  final RatingService _ratingService = RatingService();
   late Future<List<Rating>> _ratingFuture;
   final RatingController _ratingController = RatingController();
-   ProviderDetailCard({Key? key, required this.serviceProvider}) : super(key: key);
+    @override
+  void initState() {
+    super.initState();
+    final _providerId = widget.serviceProvider.id!;
+    _ratingFuture = _ratingService.getRatingByProviderId(_providerId);
+  }
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-    print("build card ${serviceProvider.id}");
-    final _providerid =  serviceProvider.id!;
-   _ratingFuture= _ratingService.getRatingByProviderId(_providerid);
+  Widget build(BuildContext context) {
+  
   
 return SafeArea(
   child: FutureBuilder<List<Rating>>(
@@ -64,7 +72,7 @@ _comment = rating.comment!;
                 width: 100,
                 height: 100,
                 child: Image.asset(
-                  serviceProvider.photoUrl,
+                  widget.serviceProvider.photoUrl,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -76,7 +84,7 @@ _comment = rating.comment!;
                   children: [
                     // Name
                     Text(
-                      serviceProvider.firstName,
+                     widget.serviceProvider.firstName,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -85,11 +93,11 @@ _comment = rating.comment!;
                     // Location and distance
                     Row(
                       children: [
-                         Text(serviceProvider?.address??""),
+                         Text(widget.serviceProvider?.address??""),
                         SizedBox(width: 8.0),
                         Icon(Icons.location_on),
                         SizedBox(width: 4.0),
-                        Text('${serviceProvider.distance} km'),
+                        Text('${widget.serviceProvider.distance} km'),
                       ],
                     ),
                     // Stars
@@ -119,4 +127,6 @@ _comment = rating.comment!;
    
    
   }
+  
+ 
 }
