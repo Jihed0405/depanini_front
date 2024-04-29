@@ -1,8 +1,8 @@
-  import 'package:depanini_front/models/serviceProvider.dart';
+  import 'package:depanini_front/models/rating.dart';
+import 'package:depanini_front/models/serviceProvider.dart';
+import 'package:depanini_front/services/ratingService.dart';
 import 'package:depanini_front/services/serviceProvidersService.dart';
 import 'package:depanini_front/widgets/ServiceProviderCard.dart';
-import 'package:depanini_front/widgets/categories.dart';
-import 'package:depanini_front/widgets/category_list_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -14,10 +14,17 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
    final ServiceProvidersService _serviceProvidersService = ServiceProvidersService();
+   final RatingService _ratingService =RatingService();
   late Future<List<ServiceProvider>> _serviceProviderFuture;
+  late Future<List<Rating>> _ratingFuture;
+  @override
+  void initState() {
+    super.initState();
+_ratingFuture = _ratingService.getProvidersMostRated();
+  }
   @override
   Widget build(BuildContext context) {
-    _serviceProviderFuture = _serviceProvidersService.getServiceProviders();
+    _serviceProviderFuture = _serviceProvidersService.getServiceProvidersMostQualified();
     return SafeArea(
 
 
@@ -30,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
                if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
-                  print(snapshot.error);
+                
                   return Padding(
                     padding: const EdgeInsets.only(left:32.0),
                     child: Center(

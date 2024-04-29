@@ -26,9 +26,9 @@ class _ServiceCardState extends ConsumerState<ServiceCard> {
     print("providers${ref.watch(serviceNameProvider)}");
     return GestureDetector(
       onTap: () {
-        print('Category tapped${widget.service.id}');
+ 
         String name = widget.service.name!;
-        print("service name = $name");
+       
         int serviceId = widget.service.id!;
         
         ref.read(serviceIdProvider.notifier).add(serviceId);

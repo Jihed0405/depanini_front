@@ -7,12 +7,12 @@ class UserService {
 
 
   Future<User> getUserById(int id) async {
-    print('this is the user id $id');
+
     final response = await http.get(Uri.parse('$baseUrl/$id'));
-print("the user testing now is ${response.body}");
+
     if (response.statusCode == 200) {
       final  jsonList = json.decode(response.body);
-      print(  'we need ${ User.fromJson(jsonList)}');
+
       return  User.fromJson(jsonList);
 
     } else {

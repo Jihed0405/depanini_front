@@ -39,7 +39,7 @@ class _ServiceProviderCardState extends ConsumerState<ServiceProviderCard> {
     
     return GestureDetector(
       onTap: () {
-        print('Provider tapped${widget.serviceProvider.id}');
+    
         int providerId = widget.serviceProvider.id!;
         String providerName =
             widget.serviceProvider.firstName + " " + widget.serviceProvider.lastName;
@@ -58,7 +58,7 @@ class _ServiceProviderCardState extends ConsumerState<ServiceProviderCard> {
                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   }  else if (snapshot.hasError) {
-                    print(snapshot.error);
+                 
                     return Padding(
                       padding: const EdgeInsets.only(left:32.0),
                       child: Center(
