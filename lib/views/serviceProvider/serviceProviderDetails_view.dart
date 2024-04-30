@@ -4,6 +4,7 @@ import 'package:depanini_front/services/serviceProvidersService.dart';
 import 'package:depanini_front/widgets/ProviderDetailCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ServiceProviderDetailsView extends ConsumerStatefulWidget {
   const ServiceProviderDetailsView({Key? key}) : super(key: key);
@@ -48,23 +49,6 @@ class _ServiceProviderDetailsViewState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0, left: 16.0),
-                      child: Text(
-                        "Details",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 50), // Spacer
-                    _buildContactIcons(),
-                  ],
-                ),
                 FutureBuilder<ServiceProvider>(
                   future: _serviceProviderFuture,
                   builder: (context, snapshot) {
@@ -81,13 +65,30 @@ class _ServiceProviderDetailsViewState
                       );
                     } else {
                       final serviceProvider = snapshot.data;
+                      print("jihed phone is${serviceProvider?.phoneNumber}");
                       if (serviceProvider == null) {
                         return Text(
                             "No service providers for this service ");
                       } else {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: [Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 16.0),
+                      child: Text(
+                        "Details",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 50), // Spacer
+                    _buildContactIcons(serviceProvider),
+                  ],
+                ),
                             SizedBox(
                               height: 180,
                               child: ProviderDetailCard(
@@ -103,6 +104,8 @@ class _ServiceProviderDetailsViewState
                     }
                   },
                 ),
+                
+                
               ],
             ),
           ),
@@ -203,57 +206,58 @@ class _ServiceProviderDetailsViewState
       ),
     );
   }
-Widget _buildContactIcons() {
+Widget _buildContactIcons(ServiceProvider? serviceProvider) {
   return Padding(
     padding: const EdgeInsets.only(right: 16.0),
     child: Row(
       children: [
-        Container(
-          width: 50,
-          height: 50,
-          child: IconButton(
-            onPressed: () {
-
-              // Add your call functionality here
-              print("called");
-            },
-            
-            icon: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Color(0xFFebab01),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                Icons.call,
-                color: Colors.white,
-              ),
+        ElevatedButton(
+          onPressed: () {
+             if (serviceProvider != null) {
+              _makePhoneCall(serviceProvider.phoneNumber ?? '');} // Replace '1234567890' with the desired phone number
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFFebab01),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
+            minimumSize: Size(40, 40),
+          ),
+          child: Icon(
+            Icons.call,
+            size: 24,
+            color: Colors.white,
           ),
         ),
-        SizedBox(width: 10),
-        IconButton(
+        SizedBox(width: 8),
+        ElevatedButton(
           onPressed: () {
             // Add your message functionality here
             print("message clicked");
           },
-          
-          icon: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Color(0xFFebab01),
-              borderRadius: BorderRadius.circular(10),
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFFebab01),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(
-              Icons.message,
-              color: Colors.white,
-            ),
+            minimumSize: Size(40, 40),
+          ),
+          child: Icon(
+            Icons.message,
+            size: 24,
+            color: Colors.white,
           ),
         ),
       ],
     ),
   );
 }
+
+Future<void> _makePhoneCall(String phoneNumber) async {
+  final Uri _url = Uri(scheme: 'tel', path: phoneNumber);
+ if (!await launchUrl(_url)) {
+    throw Exception('Could not launch $_url');
+  }
+}
+
 }

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProviderDetailCard extends ConsumerStatefulWidget {
-  final ServiceProvider serviceProvider;
+  late ServiceProvider serviceProvider;
  ProviderDetailCard({Key? key, required this.serviceProvider}) : super(key: key);
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ServiceProviderDetailsViewState();}
