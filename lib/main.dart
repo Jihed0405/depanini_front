@@ -3,12 +3,7 @@ import 'package:depanini_front/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-//part 'main.g.dart';
 
-// @riverpod
-// String helloWorld(HelloWorldRef ref){
-// return 'Hello orlds';
-// }
 void main() {
   runApp(ProviderScope(child:MyApp()));
 }

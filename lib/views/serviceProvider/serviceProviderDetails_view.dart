@@ -1,6 +1,7 @@
 import 'package:depanini_front/models/serviceProvider.dart';
 import 'package:depanini_front/provider/provider.dart';
 import 'package:depanini_front/services/serviceProvidersService.dart';
+import 'package:depanini_front/views/chat/message_view.dart';
 import 'package:depanini_front/widgets/ProviderDetailCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -233,7 +234,10 @@ Widget _buildContactIcons(ServiceProvider? serviceProvider) {
         ElevatedButton(
           onPressed: () {
             // Add your message functionality here
-            print("message clicked");
+            Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MessageView()),
+        );
           },
           style: ElevatedButton.styleFrom(
             primary: Color(0xFFebab01),
