@@ -88,7 +88,7 @@ class _ServiceScreenState extends ConsumerState<ServiceProviderView> {
       }
       else{
                       return SizedBox(
-                        height: 400,
+                        height: 1000,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: serviceProviderList.length,
@@ -103,7 +103,7 @@ class _ServiceScreenState extends ConsumerState<ServiceProviderView> {
                 }
               },
             ),
-            const SizedBox(height: 30),
+            
           ],
         ),
       ),
