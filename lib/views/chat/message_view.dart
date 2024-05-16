@@ -12,7 +12,7 @@ class _MessageViewState extends State<MessageView> {
   Widget build(BuildContext context) {
  return Scaffold(appBar: AppBar(
            centerTitle: true,
-          title: Text('message ',
+          title: Text('Message ',
              style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,

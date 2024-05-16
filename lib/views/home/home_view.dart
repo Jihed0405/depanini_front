@@ -1,4 +1,5 @@
-  import 'package:depanini_front/models/rating.dart';
+  import 'package:depanini_front/controllers/home_controller.dart';
+import 'package:depanini_front/models/rating.dart';
 import 'package:depanini_front/models/serviceProvider.dart';
 import 'package:depanini_front/services/ratingService.dart';
 import 'package:depanini_front/services/serviceProvidersService.dart';
@@ -13,18 +14,17 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-   final ServiceProvidersService _serviceProvidersService = ServiceProvidersService();
-   final RatingService _ratingService =RatingService();
+  final HomeController _homeController = HomeController();
   late Future<List<ServiceProvider>> _serviceProviderFuture;
-  late Future<List<Rating>> _ratingFuture;
+
   @override
   void initState() {
     super.initState();
-_ratingFuture = _ratingService.getProvidersMostRated();
+
   }
   @override
   Widget build(BuildContext context) {
-    _serviceProviderFuture = _serviceProvidersService.getServiceProvidersMostQualified();
+    _serviceProviderFuture = _homeController.getServiceProvidersMostQualified();
     return SafeArea(
 
 

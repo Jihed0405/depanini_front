@@ -1,4 +1,4 @@
-class RatingController{
+class ServiceProviderCardController {
 int calculateOverallRating(int workRating, int disciplineRating,int costRating) {
    
     double workWeight = 0.4;

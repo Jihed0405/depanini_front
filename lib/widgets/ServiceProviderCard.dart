@@ -1,4 +1,5 @@
-import 'package:depanini_front/controllers/rating_controller.dart';
+
+import 'package:depanini_front/controllers/service_provider_card_controller.dart';
 import 'package:depanini_front/models/rating.dart';
 import 'package:depanini_front/models/serviceProvider.dart';
 import 'package:depanini_front/provider/provider.dart';
@@ -20,7 +21,7 @@ class ServiceProviderCard extends ConsumerStatefulWidget {
 class _ServiceProviderCardState extends ConsumerState<ServiceProviderCard> {
   final RatingService _ratingService = RatingService();
   late Future<List<Rating>> _ratingFuture;
-  final RatingController _ratingController = RatingController();
+  final ServiceProviderCardController  _controller  = ServiceProviderCardController();
     @override
   void initState() {
     super.initState();
@@ -71,7 +72,7 @@ class _ServiceProviderCardState extends ConsumerState<ServiceProviderCard> {
                     int totalStar=0;
                  for (var rating in ratingList) {
 _comment = rating.comment!;
-  totalStar += _ratingController.calculateOverallRating(
+  totalStar += _controller.calculateOverallRating(
     rating.workRating,
     rating.disciplineRating,
     rating.costRating,

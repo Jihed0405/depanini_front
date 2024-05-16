@@ -41,4 +41,6 @@ class ServiceEntity {
       name: json['name'],
     );
   }
+
+
 }

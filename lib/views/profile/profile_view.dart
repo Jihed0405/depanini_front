@@ -1,5 +1,6 @@
 import 'package:depanini_front/constants/color.dart';
 import 'package:depanini_front/constants/size.dart';
+import 'package:depanini_front/controllers/profile_controller.dart';
 import 'package:depanini_front/models/user.dart';
 import 'package:depanini_front/services/userService.dart';
 import 'package:depanini_front/widgets/profile_account_info_tile.dart';
@@ -13,11 +14,16 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-     final UserService _userService = UserService();
+    final ProfileController _profileController = ProfileController();
   late Future<User> _userServiceFuture;
+   @override
+  void initState() {
+    super.initState();
+    _userServiceFuture = _profileController.getUserById(7);
+  }
   @override
   Widget build(BuildContext context) {
-     _userServiceFuture = _userService.getUserById(7);
+     
     return Scaffold(
       
       backgroundColor: background,
