@@ -17,7 +17,7 @@ final String address;
    required this.address
     
   }){
-    photoUrl="assets/person/avatar.jpg";
+    photoUrl="https://imgur.com/VCQ7Yln.jpg";
   }
   factory User.fromJson(Map<String, dynamic> json) {
     return User(

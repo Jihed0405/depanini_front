@@ -1,6 +1,6 @@
-import 'package:depanini_front/models/category.dart';
-import 'package:depanini_front/services/categoryService.dart';
-import 'package:depanini_front/widgets/categoryCard.dart';
+import 'package:depanini/models/category.dart';
+import 'package:depanini/services/categoryService.dart';
+import 'package:depanini/widgets/categoryCard.dart';
 import 'package:flutter/material.dart';
 
 class Categories extends StatefulWidget {

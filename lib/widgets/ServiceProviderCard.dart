@@ -1,10 +1,10 @@
 
-import 'package:depanini_front/controllers/service_provider_card_controller.dart';
-import 'package:depanini_front/models/rating.dart';
-import 'package:depanini_front/models/serviceProvider.dart';
-import 'package:depanini_front/provider/provider.dart';
-import 'package:depanini_front/services/ratingService.dart';
-import 'package:depanini_front/views/serviceProvider/serviceProviderDetails_view.dart';
+import 'package:depanini/controllers/service_provider_card_controller.dart';
+import 'package:depanini/models/rating.dart';
+import 'package:depanini/models/serviceProvider.dart';
+import 'package:depanini/provider/provider.dart';
+import 'package:depanini/services/ratingService.dart';
+import 'package:depanini/views/serviceProvider/serviceProviderDetails_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

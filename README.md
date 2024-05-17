@@ -1,4 +1,4 @@
-# depanini_front
+# depanini
 
 A new Flutter project.
 

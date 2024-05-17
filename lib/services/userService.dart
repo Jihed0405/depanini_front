@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:depanini_front/models/user.dart';
+import 'package:depanini/models/user.dart';
 import 'package:http/http.dart' as http;
 
 class UserService {

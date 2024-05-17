@@ -1,9 +1,9 @@
-import 'package:depanini_front/constants/size.dart';
-import 'package:depanini_front/models/category.dart';
-import 'package:depanini_front/provider/provider.dart';
-import 'package:depanini_front/views/search/search_view.dart';
-import 'package:depanini_front/views/service/service_view.dart';
-import 'package:depanini_front/views/serviceProvider/serviceProvider_view.dart';
+import 'package:depanini/constants/size.dart';
+import 'package:depanini/models/category.dart';
+import 'package:depanini/provider/provider.dart';
+import 'package:depanini/views/search/search_view.dart';
+import 'package:depanini/views/service/service_view.dart';
+import 'package:depanini/views/serviceProvider/serviceProvider_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

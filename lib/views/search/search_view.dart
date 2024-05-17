@@ -1,4 +1,4 @@
-import 'package:depanini_front/widgets/categories.dart';
+import 'package:depanini/widgets/categories.dart';
 import 'package:flutter/material.dart';
 
 class SearchView extends StatefulWidget {

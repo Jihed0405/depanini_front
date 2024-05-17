@@ -1,10 +1,10 @@
 
-import 'package:depanini_front/models/serviceEntity.dart';
-import 'package:depanini_front/provider/provider.dart';
-import 'package:depanini_front/services/categoryService.dart';
-import 'package:depanini_front/services/serviceService.dart';
-import 'package:depanini_front/widgets/categoryCard.dart';
-import 'package:depanini_front/widgets/serviceCard.dart';
+import 'package:depanini/models/serviceEntity.dart';
+import 'package:depanini/provider/provider.dart';
+import 'package:depanini/services/categoryService.dart';
+import 'package:depanini/services/serviceService.dart';
+import 'package:depanini/widgets/categoryCard.dart';
+import 'package:depanini/widgets/serviceCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

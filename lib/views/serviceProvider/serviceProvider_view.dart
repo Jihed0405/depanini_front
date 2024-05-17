@@ -1,8 +1,8 @@
 
-import 'package:depanini_front/models/serviceProvider.dart';
-import 'package:depanini_front/provider/provider.dart';
-import 'package:depanini_front/services/serviceProvidersService.dart';
-import 'package:depanini_front/widgets/ServiceProviderCard.dart';
+import 'package:depanini/models/serviceProvider.dart';
+import 'package:depanini/provider/provider.dart';
+import 'package:depanini/services/serviceProvidersService.dart';
+import 'package:depanini/widgets/ServiceProviderCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ServiceProviderView extends ConsumerStatefulWidget {

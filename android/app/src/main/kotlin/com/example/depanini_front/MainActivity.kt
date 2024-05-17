@@ -1,4 +1,4 @@
-package com.example.depanini_front
+package com.example.depanini
 
 import io.flutter.embedding.android.FlutterActivity
 

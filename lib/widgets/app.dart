@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:depanini_front/routes.dart';
+import 'package:depanini/routes.dart';
 class App extends StatefulWidget {
   const App({super.key});
 

@@ -1,6 +1,6 @@
 {
-    "name": "depanini_front",
-    "short_name": "depanini_front",
+    "name": "depanini",
+    "short_name": "depanini",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

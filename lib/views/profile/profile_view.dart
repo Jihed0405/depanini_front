@@ -1,9 +1,10 @@
-import 'package:depanini_front/constants/color.dart';
-import 'package:depanini_front/constants/size.dart';
-import 'package:depanini_front/controllers/profile_controller.dart';
-import 'package:depanini_front/models/user.dart';
-import 'package:depanini_front/services/userService.dart';
-import 'package:depanini_front/widgets/profile_account_info_tile.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:depanini/constants/color.dart';
+import 'package:depanini/constants/size.dart';
+import 'package:depanini/controllers/profile_controller.dart';
+import 'package:depanini/models/user.dart';
+import 'package:depanini/services/userService.dart';
+import 'package:depanini/widgets/profile_account_info_tile.dart';
 import 'package:flutter/material.dart';
 
 class ProfileView extends StatefulWidget {
@@ -49,6 +50,7 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                   );
                 } else {final  userData= snapshot.data!;
+                print(userData.photoUrl);
   return SingleChildScrollView(
       child:Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,9 +62,18 @@ class _ProfileViewState extends State<ProfileView> {
                 ClipRRect(
                   borderRadius:
                       const BorderRadius.all(Radius.circular(defaultRadius)),
-                  child: Image.asset(
-                    "${userData.photoUrl}",
+                  child: CachedNetworkImage(
+                  imageUrl: userData.photoUrl,
                     width: 100,
+                    height: 100,
+                    
+                    placeholder: (context, url) => Container(
+                              width: 100,
+                              height: 100,
+                              color: Colors.grey,
+                              
+                            ),
+  errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
                 const SizedBox(

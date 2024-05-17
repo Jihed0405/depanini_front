@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:depanini_front/models/rating.dart';
-import 'package:depanini_front/models/serviceEntity.dart';
+import 'package:depanini/models/rating.dart';
+import 'package:depanini/models/serviceEntity.dart';
 import 'package:http/http.dart' as http;
 
 class RatingService {

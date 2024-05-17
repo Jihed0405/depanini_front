@@ -1,8 +1,8 @@
-import 'package:depanini_front/controllers/service_provider_details_controller.dart';
-import 'package:depanini_front/models/serviceProvider.dart';
-import 'package:depanini_front/provider/provider.dart';
-import 'package:depanini_front/views/chat/message_view.dart';
-import 'package:depanini_front/widgets/ProviderDetailCard.dart';
+import 'package:depanini/controllers/service_provider_details_controller.dart';
+import 'package:depanini/models/serviceProvider.dart';
+import 'package:depanini/provider/provider.dart';
+import 'package:depanini/views/chat/message_view.dart';
+import 'package:depanini/widgets/ProviderDetailCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -295,7 +295,7 @@ Widget _buildAboutContent(ServiceProvider serviceProvider) {
             onPressed: () {
               if (serviceProvider != null) {
                 _controller.makePhoneCall(serviceProvider.phoneNumber ?? '',context);
-              } // Replace '1234567890' with the desired phone number
+              } 
             },
             style: ElevatedButton.styleFrom(
               primary: Color(0xFFebab01),

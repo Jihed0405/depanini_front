@@ -1,8 +1,8 @@
-import 'package:depanini_front/constants/color.dart';
-import 'package:depanini_front/constants/size.dart';
-import 'package:depanini_front/views/home/home_view.dart';
-import 'package:depanini_front/widgets/app.dart';
-import 'package:depanini_front/widgets/onbordingBodyWidget.dart';
+import 'package:depanini/constants/color.dart';
+import 'package:depanini/constants/size.dart';
+import 'package:depanini/views/home/home_view.dart';
+import 'package:depanini/widgets/app.dart';
+import 'package:depanini/widgets/onbordingBodyWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

@@ -1,5 +1,5 @@
-import 'package:depanini_front/constants/color.dart';
-import 'package:depanini_front/constants/size.dart';
+import 'package:depanini/constants/color.dart';
+import 'package:depanini/constants/size.dart';
 import 'package:flutter/material.dart';
 
 class onbordingBodyWidget extends StatelessWidget {

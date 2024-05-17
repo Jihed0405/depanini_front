@@ -1,4 +1,4 @@
-import 'package:depanini_front/models/serviceEntity.dart';
+import 'package:depanini/models/serviceEntity.dart';
 
 class ServiceProvider {
     final int id;

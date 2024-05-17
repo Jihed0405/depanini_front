@@ -1,6 +1,6 @@
 
 
-import 'package:depanini_front/widgets/onBoarding.dart';
+import 'package:depanini/widgets/onBoarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

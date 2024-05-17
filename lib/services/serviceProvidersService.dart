@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 
-import 'package:depanini_front/models/serviceProvider.dart';
+import 'package:depanini/models/serviceProvider.dart';
 import 'package:http/http.dart' as http;
 
 class ServiceProvidersService {
