@@ -5,6 +5,7 @@ import 'package:depanini/services/serviceService.dart';
 import 'package:depanini/widgets/serviceCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Services extends ConsumerStatefulWidget  {
   const Services({Key? key}) : super(key: key);
@@ -20,13 +21,13 @@ class _ServicesState extends ConsumerState<Services> {
   @override
   void initState() {
     super.initState();
-   
+   _serviceFuture = Future.delayed(Duration(seconds: 2), ()=>_serviceService.getServicesByCategoryId(ref.read(categoryIdProvider)));
   }
 
   @override
   Widget build(BuildContext context) {
     print("helllooo ${ref.watch(categoryIdProvider)}");
-     _serviceFuture = _serviceService.getServicesByCategoryId(ref.watch(categoryIdProvider));
+     
     
 
       
@@ -65,7 +66,25 @@ class _ServicesState extends ConsumerState<Services> {
               future: _serviceFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return  GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 0.9,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 15,
+                    ),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 5),
+                        child: ServiceCardOnload(),
+                      );
+                    },
+                    itemCount: 9,
+                  );
                 } else if (snapshot.hasError) {
                   return Padding(
                    padding: const EdgeInsets.only(left:32.0),
@@ -107,5 +126,42 @@ class _ServicesState extends ConsumerState<Services> {
         ),
       ),
     );}
+    
+      ServiceCardOnload() {
+        return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+    
+        
+      ),
+      padding: EdgeInsets.all(5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+           Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    height: 80,
+                    width: 80,
+                    color: Colors.grey,
+                  ),
+                )
+              ,
+          SizedBox(height: 10),
+       Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    height: 20,
+                    width: 100,
+                    color: Colors.grey,
+                  ),
+                )
+            
+        ],
+      ),
+    );
+      }
   }
 

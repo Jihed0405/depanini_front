@@ -1,6 +1,8 @@
 import 'package:depanini/controllers/service_provider_details_controller.dart';
+import 'package:depanini/models/rating.dart';
 import 'package:depanini/models/serviceProvider.dart';
 import 'package:depanini/provider/provider.dart';
+import 'package:depanini/services/ratingService.dart';
 import 'package:depanini/views/chat/message_view.dart';
 
 
@@ -24,13 +26,15 @@ class _ServiceProviderDetailsViewState
 
   late Future<ServiceProvider> _serviceProviderFuture;
   String _selectedMenu = 'About'; // Default selected menu
-
+  final RatingService _ratingService = RatingService();
+  late Future<List<Rating>> _ratingFuture;
   @override
   void initState() {
     super.initState();
-       
+        
 
     _serviceProviderFuture = Future.delayed(Duration(seconds: 2), () =>_controller.getProvider(ref.read(serviceProviderIdProvider)));
+    
   }
 
   @override
@@ -98,10 +102,12 @@ class _ServiceProviderDetailsViewState
                       );
                     } else {
                       final serviceProvider = snapshot.data;
-                     
+                    
                       if (serviceProvider == null) {
                         return Text("error in retrieving service provider détails ");
                       } else {
+                         final _providerId = serviceProvider.id;
+    this._ratingFuture = Future.delayed(Duration(seconds: 2), () => _ratingService.getRatingByProviderId(_providerId));
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -273,7 +279,7 @@ Widget _buildAboutContent(ServiceProvider serviceProvider) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: SizedBox(
-                      width: 100, // Width of each card
+                      width: 150, // Width of each card
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -282,11 +288,13 @@ Widget _buildAboutContent(ServiceProvider serviceProvider) {
                             height: 40,
                           ),
                           SizedBox(height: 8),
-                          Text(
-                            service.name,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: Text(
+                              service.name,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
@@ -429,15 +437,90 @@ Widget _buildAboutContentOnLoad() {
 
   Widget _buildReviewsContent(ServiceProvider serviceProvider) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
-        height: 200,
-        color: Colors.grey[200],
-        child: Center(
-          child: Text('Reviews content goes here'),
+    padding: const EdgeInsets.all(16.0),
+    child: Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Clients rate',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 16),
+            Center(
+              child: Column(
+                children: [
+                  Text(
+                    '4.5', // Example star rating
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(5, (index) {
+                      return Icon(
+                        index < 4.5 ? Icons.star : Icons.star_border,
+                        color: Colors.yellow,
+                      );
+                    }),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    '2 notes', // Example number of notes
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 16),
+            _buildRatingRow('Quality of service'),
+            SizedBox(height: 8),
+            _buildRatingRow('Discipline Rating'),
+            SizedBox(height: 8),
+            _buildRatingRow('Fees of the service'),
+            SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // Add your rating functionality here
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFFebab01),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                icon: Icon(
+                  Icons.star,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  'Add Rate',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-    );
+    ),
+  );
+
   }
 
   Widget _buildContactIcons(ServiceProvider? serviceProvider) {
@@ -527,4 +610,26 @@ Widget _buildAboutContentOnLoad() {
       ),
     );
   }
+}
+
+Widget _buildRatingRow(String title) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        title,
+        style: TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      Row(
+        children: List.generate(5, (index) {
+          return Icon(
+            index < 4.5 ? Icons.star : Icons.star_border,
+            color: Colors.yellow,
+          );
+        }),
+      ),
+    ],
+  );
 }

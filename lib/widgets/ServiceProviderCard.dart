@@ -21,7 +21,7 @@ class ServiceProviderCard extends ConsumerStatefulWidget {
 
 class _ServiceProviderCardState extends ConsumerState<ServiceProviderCard> {
   final RatingService _ratingService = RatingService();
-  final bool onLoad = true;
+  bool onLoad = true;
   late Future<List<Rating>> _ratingFuture;
   final ServiceProviderCardController  _controller  = ServiceProviderCardController();
     @override
@@ -127,6 +127,7 @@ if(!onLoad){
           ),
         );
       } else {
+        this.onLoad = false;
         final ratingList = snapshot.data!;
         String _comment = '';
         int totalStar = 0;

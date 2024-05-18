@@ -39,18 +39,7 @@ class _ServiceCardState extends ConsumerState<ServiceCard> {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(.1),
-              blurRadius: 4.0,
-              spreadRadius: .05,
-            ),
-          ],
-          border: Border.all(
-            color: Colors.grey, // Border color
-            width: 1, // Border width
-          ),
+       
         ),
         padding: EdgeInsets.all(5),
         child: Column(

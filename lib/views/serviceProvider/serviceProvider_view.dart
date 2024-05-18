@@ -38,36 +38,35 @@ class _ServiceScreenState extends ConsumerState<ServiceProviderView> {
         ))
         ),
         body: SafeArea(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 10,
-                left: 20,
-                right: 30,
-                bottom: 20,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Explore Service Providers",
-                      style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-                    ),
-                  ),
-                
-                ],
-              ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 10,
+              left: 20,
+              right: 30,
+              bottom: 20,
             ),
-        
-            FutureBuilder<List<ServiceProvider>>(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Explore Service Providers",
+                    style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
+                  ),
+                ),
+              
+              ],
+            ),
+          ),
+      
+          Expanded(
+            child: FutureBuilder<List<ServiceProvider>>(
               future: _serviceProviderFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -83,29 +82,26 @@ class _ServiceScreenState extends ConsumerState<ServiceProviderView> {
                   );
                 } else {
                   final serviceProviderList = snapshot.data!;
-      if(serviceProviderList.isEmpty){
-       return Text("No service providers for this service  ");
-      }
-      else{
-                      return SizedBox(
-                        height: 1000,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: serviceProviderList.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ServiceProviderCard(serviceProvider: serviceProviderList[index]),
-                            );
-                          },
-                        ),
+                  if(serviceProviderList.isEmpty){
+                   return Text("No service providers for this service  ");
+                  }
+                  else{
+                      return ListView.builder(
+                       
+                        itemCount: serviceProviderList.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ServiceProviderCard(serviceProvider: serviceProviderList[index]),
+                          );
+                        },
                       );}
                 }
               },
             ),
-            
-          ],
-        ),
+          ),
+          
+        ],
       ),
     ),
       ),
