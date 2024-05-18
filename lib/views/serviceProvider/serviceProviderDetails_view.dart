@@ -471,7 +471,7 @@ Widget _buildAboutContentOnLoad() {
                     children: List.generate(5, (index) {
                       return Icon(
                         index < 4.5 ? Icons.star : Icons.star_border,
-                        color: Colors.yellow,
+                        color: Color(0xFFebab01),
                       );
                     }),
                   ),
@@ -626,7 +626,7 @@ Widget _buildRatingRow(String title) {
         children: List.generate(5, (index) {
           return Icon(
             index < 4.5 ? Icons.star : Icons.star_border,
-            color: Colors.yellow,
+            color: Color(0xFFebab01),
           );
         }),
       ),
