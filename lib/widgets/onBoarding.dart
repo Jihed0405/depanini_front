@@ -1,6 +1,5 @@
 import 'package:depanini/constants/color.dart';
 import 'package:depanini/constants/size.dart';
-import 'package:depanini/views/home/home_view.dart';
 import 'package:depanini/widgets/app.dart';
 import 'package:depanini/widgets/onbordingBodyWidget.dart';
 import 'package:flutter/material.dart';

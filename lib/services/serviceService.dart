@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:depanini/models/category.dart';
 import 'package:depanini/models/serviceEntity.dart';
 import 'package:http/http.dart' as http;
 

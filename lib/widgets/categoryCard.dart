@@ -1,7 +1,5 @@
-import 'package:depanini/constants/size.dart';
-import 'package:depanini/models/category.dart';
+
 import 'package:depanini/provider/provider.dart';
-import 'package:depanini/views/search/search_view.dart';
 import 'package:depanini/views/service/service_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

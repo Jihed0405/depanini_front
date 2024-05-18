@@ -1,11 +1,11 @@
-import 'package:depanini/constants/color.dart';
+
 import 'package:depanini/constants/size.dart';
 import 'package:flutter/material.dart';
 
 class onbordingBodyWidget extends StatelessWidget {
-  String title;
-  String subTitle;
-  String image;
+  final String title;
+  final String subTitle;
+  final String image;
   onbordingBodyWidget({
     Key? key,
     required this.title,

@@ -12,15 +12,23 @@ class ServiceProviderDetailsController {
  
 
   Future<void> makePhoneCall(String phoneNumber, BuildContext context) async {
-    final Uri _url = Uri(scheme: 'tel', path: phoneNumber);
+    try{
+    final Uri _url = Uri(scheme: 'tele', path: phoneNumber);
     if (!await launchUrl(_url)) {
-      ScaffoldMessenger.of(context).showSnackBar(
+  throw Exception('Could not launch phone call');}
+
+
+    }
+    catch(e){
+       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Could not launch phone call'),
+          content: Text(e.toString()),
         ),
       );
     }
-  }
+     
+    }
+  
 
   Future<void> sendMessage(BuildContext context) async {
     // Add your message functionality here
@@ -30,12 +38,5 @@ class ServiceProviderDetailsController {
     );
   }
 
-  Future<bool> launchUrl(Uri url) async {
-    if (await canLaunch(url.toString())) {
-      await launch(url.toString());
-      return true;
-    } else {
-      return false;
-    }
-  }
+ 
 }

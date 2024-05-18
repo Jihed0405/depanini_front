@@ -1,7 +1,5 @@
-import 'package:depanini/models/category.dart';
+
 import 'package:depanini/provider/provider.dart';
-import 'package:depanini/services/categoryService.dart';
-import 'package:depanini/widgets/categories.dart';
 import 'package:depanini/widgets/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
