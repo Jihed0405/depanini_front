@@ -10,3 +10,4 @@ const Color onbordingColor = Color(0xff98a5f3);
 const Color onboardingTextDoneColor = Color.fromARGB(255, 0, 0, 2);
 const Color selectedPageColor= Color(0xFFebab01);
 const Color textColor = Color.fromARGB(255, 177, 172, 229);
+const Color selectedColor= Color.fromARGB(255, 177, 172, 229);

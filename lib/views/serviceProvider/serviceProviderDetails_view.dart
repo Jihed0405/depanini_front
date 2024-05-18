@@ -1,9 +1,11 @@
+import 'package:depanini/constants/color.dart';
 import 'package:depanini/controllers/service_provider_details_controller.dart';
 import 'package:depanini/models/rating.dart';
 import 'package:depanini/models/serviceProvider.dart';
 import 'package:depanini/provider/provider.dart';
 import 'package:depanini/services/ratingService.dart';
 import 'package:depanini/views/chat/message_view.dart';
+import 'package:depanini/widgets/reviewsContent.dart';
 
 
 import 'package:flutter/material.dart';
@@ -175,7 +177,7 @@ class _ServiceProviderDetailsViewState
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
-          color: _selectedMenu == title ? Colors.blue : Colors.black,
+          color: _selectedMenu == title ? selectedColor: Colors.black,
         ),
       ),
     );
@@ -186,7 +188,7 @@ class _ServiceProviderDetailsViewState
       case 'Gallery':
         return _buildGalleryContent(serviceProvider);
       case 'Reviews':
-        return _buildReviewsContent(serviceProvider);
+        return ReviewsContent(serviceProvider: serviceProvider);
       default:
         return _buildAboutContent(serviceProvider);
     }
@@ -209,6 +211,7 @@ Widget _buildAboutContent(ServiceProvider serviceProvider) {
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: Card(
+      color: Color(0xFFF5F5F5),
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
