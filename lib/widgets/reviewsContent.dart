@@ -22,7 +22,7 @@ class _ReviewsContentState extends State<ReviewsContent> {
   @override
   void initState() {
     super.initState();
-    _ratingFuture = _ratingService.getRatingByProviderId(widget.serviceProvider.id);
+    _ratingFuture = Future.delayed(Duration(seconds: 2), () =>_ratingService.getRatingByProviderId(widget.serviceProvider.id));
   }
 
   @override
@@ -251,83 +251,104 @@ class _ReviewsContentState extends State<ReviewsContent> {
   }
 
   Widget _buildLoadingPlaceholder() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 200,
-                height: 24,
-                color: Colors.grey[300],
+  return  Card(
+      
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Clients rate',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 16),
-              Center(
-                child: Column(
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 24,
-                      color: Colors.grey[300],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(5, (index) {
-                        return Icon(Icons.star, color: Colors.grey[300]);
-                      }),
-                    ),
-                    SizedBox(height: 8),
-                    Container(
-                      width: 100,
-                      height: 16,
-                      color: Colors.grey[300],
-                    ),
-                  ],
+            ),
+            SizedBox(height: 16),
+            Shimmer.fromColors(
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,child:Center(
+              child: Column(
+                children: [
+                  Container(
+                    width: 50,
+                    height: 24,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(5, (index) {
+                      return Icon(Icons.star, color: Colors.grey);
+                    }),
+                  ),
+                  SizedBox(height: 8),
+                  Container(
+                    width: 60,
+                    height: 16,
+                    color: Colors.grey,
+                  ),
+                ],
+              ),
+            ),),
+            SizedBox(height: 16),
+            _buildLoadingRatingRow('Quality of service'),
+            SizedBox(height: 8),
+            _buildLoadingRatingRow('Discipline Rating'),
+            SizedBox(height: 8),
+            _buildLoadingRatingRow('Fees of the service'),
+            SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                 print("here we go rating create now ");
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFebab01), // Set button color to theme color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                icon: Icon(
+                  Icons.star,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  'Add Rate',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
-              SizedBox(height: 16),
-              _buildLoadingRatingRow(),
-              SizedBox(height: 8),
-              _buildLoadingRatingRow(),
-              SizedBox(height: 8),
-              _buildLoadingRatingRow(),
-              SizedBox(height: 16),
-              Container(
-                width: double.infinity,
-                height: 48,
-                color: Colors.grey[300],
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
-  }
-
-  Widget _buildLoadingRatingRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          width: 150,
-          height: 16,
-          color: Colors.grey[300],
-        ),
-        Row(
-          children: List.generate(5, (index) {
-            return Icon(Icons.star, color: Colors.grey[300]);
-          }),
-        ),
-      ],
-    );
-  }
+  
 }
+
+Widget _buildLoadingRatingRow(String title ) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        title,
+        style: TextStyle(
+          fontSize: 16,
+        ),
+      ),
+        Shimmer.fromColors(
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,child:Row(
+        children: List.generate(5, (index) {
+          return Icon(Icons.star, color: Colors.grey);
+        }),
+      ),),
+    ],
+  );
+}}
