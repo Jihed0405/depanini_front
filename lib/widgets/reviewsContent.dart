@@ -5,6 +5,7 @@ import 'package:depanini/services/ratingService.dart';
 import 'package:depanini/models/rating.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 class ReviewsContent extends StatefulWidget {
   final ServiceProvider serviceProvider;
 
@@ -362,7 +363,8 @@ class _ReviewsContentState extends State<ReviewsContent> {
       ],
     );
   }
-   void _showRatingModal(BuildContext context, ServiceProvider serviceProvider) {
+
+  void _showRatingModal(BuildContext context, ServiceProvider serviceProvider) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -371,100 +373,162 @@ class _ReviewsContentState extends State<ReviewsContent> {
         double feesOfService = 0;
         TextEditingController commentController = TextEditingController();
 
-        return AlertDialog(
-          title: Text('${serviceProvider.firstName} ${serviceProvider.lastName}'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildRatingRowModal('Quality of service', (rating) {
-                  qualityOfService = rating;
-                }),
-                SizedBox(height: 8),
-                _buildRatingRowModal('Discipline Rating', (rating) {
-                  disciplineRating = rating;
-                }),
-                SizedBox(height: 8),
-                _buildRatingRowModal('Fees of the service', (rating) {
-                  feesOfService = rating;
-                }),
-                SizedBox(height: 16),
-               TextField(
-  controller: commentController,
-  decoration: InputDecoration(
-   
-     hintText: 'Tap to add a comment', // Hint text inside the TextField
-    hintStyle: TextStyle(color: Colors.grey), // Hint text color
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8.0),
-      borderSide: BorderSide(
-        color: Colors.grey, // Grey border color
-      ),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8.0),
-      borderSide: BorderSide(
-        color: Colors.grey, // Grey border color when focused
-      ),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8.0),
-      borderSide: BorderSide(
-        color: Colors.grey, // Grey border color when enabled
-      ),
-    ),
-  ),
-  maxLines: 3,
-  style: TextStyle(color: Colors.black),
-   cursorColor: Colors.grey, // Set text color to grey
-)
-              ],
-            ),
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
           ),
-          actions: [
-            TextButton(
-             
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'  ,style: TextStyle(color: Colors.black),),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Add functionality to save the rating and comment
-                Navigator.of(context).pop();
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFFebab01),
-              ),
-              child: Text('Save Rate',  style: TextStyle(color: Colors.white),),
-            ),
-          ],
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child: contentBox(context, serviceProvider, qualityOfService,
+              disciplineRating, feesOfService, commentController),
         );
       },
     );
   }
 
-  Widget _buildRatingRowModal(String title, void Function(double) onRatingUpdate) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: TextStyle(fontSize: 16)),
-        SizedBox(height: 4),
-        RatingBar.builder(
-          initialRating: 0,
-          minRating: 1,
-          direction: Axis.horizontal,
-          allowHalfRating: false,
-          itemCount: 5,
-          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-          itemBuilder: (context, _) => Icon(
-            Icons.star,
-            color: Color(0xFFebab01),
+  Widget contentBox(
+      BuildContext context,
+      ServiceProvider serviceProvider,
+      double qualityOfService,
+      double disciplineRating,
+      double feesOfService,
+      TextEditingController commentController) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 16),
+          margin: EdgeInsets.only(top: 16),
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10.0,
+                offset: Offset(0.0, 10.0),
+              ),
+            ],
           ),
-          onRatingUpdate: onRatingUpdate,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '${serviceProvider.firstName} ${serviceProvider.lastName}',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16),
+              _buildRatingRowModal('Quality of service', qualityOfService,(rating) {
+                qualityOfService = rating;
+              }),
+              SizedBox(height: 8),
+              _buildRatingRowModal('Discipline Rating', disciplineRating,(rating) {
+                disciplineRating = rating;
+              }),
+              SizedBox(height: 8),
+              _buildRatingRowModal('Fees of the service', feesOfService,(rating) {
+                feesOfService = rating;
+              }),
+              SizedBox(height: 16),
+              Flexible(
+                child: TextField(
+                  controller: commentController,
+                  decoration: InputDecoration(
+                    hintText: 'Tap to add a comment',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  maxLines: 3,
+                  style: TextStyle(color: Colors.black),
+                  cursorColor: Colors.grey,
+                ),
+              ),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.grey,
+                    ),
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add functionality to save the rating and comment
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFFebab01),
+                    ),
+                    child: Text(
+                      'Save Rate',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );
+  }
+
+  Widget _buildRatingRowModal(
+      String title, double initialRating,void Function(double) onRatingUpdate) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(title, style: TextStyle(fontSize: 16)),
+      SizedBox(height: 4),
+      RatingBar.builder(
+        initialRating: initialRating,
+        minRating: 1,
+        direction: Axis.horizontal,
+        allowHalfRating: false,
+        itemCount: 5,
+        itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+        itemBuilder: (context, index) => Icon(
+          index < initialRating ? Icons.star : Icons.star_border,
+          color: Color(0xFFebab01),
+        ),
+         onRatingUpdate: (rating) {
+              setState(() {
+                initialRating = rating;
+              });
+              onRatingUpdate(rating);
+            },
+        
+        unratedColor: Colors.grey,
+      ),
+    ],
+  );
   }
 }
