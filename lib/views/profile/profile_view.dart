@@ -22,7 +22,7 @@ class _ProfileViewState extends State<ProfileView> {
   void initState() {
     super.initState();
     _userServiceFuture = Future.delayed(
-        Duration(seconds: 1), () => _profileController.getUserById(7));
+        Duration(seconds: 2), () => _profileController.getUserById(7));
   }
 
   @override

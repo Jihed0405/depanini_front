@@ -12,7 +12,7 @@ class HomeController {
     return _serviceProvidersService.getServiceProvidersMostQualified();
   }
 
-  Future<List<Rating>> getProvidersMostRated() async {
-    return _ratingService.getProvidersMostRated();
+  Future<List<Rating>> getProvidersRated() async {
+    return _ratingService.getProvidersRated();
   }
 }

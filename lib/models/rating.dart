@@ -26,4 +26,15 @@ class Rating {
       date: DateTime.parse(json['date']),
     );
   }
+   Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'workRating': workRating,
+      'disciplineRating': disciplineRating,
+      'costRating': costRating,
+      'comment': comment,
+      'reviewerName': reviewerName,
+      'date': date.toIso8601String(),
+    };
+   }
 }

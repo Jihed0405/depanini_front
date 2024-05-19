@@ -1,12 +1,13 @@
 import 'dart:convert';
 
+import 'package:depanini/constants/const.dart';
 import 'package:depanini/models/serviceProvider.dart';
 import 'package:http/http.dart' as http;
 
 class ServiceProvidersService {
-  static const String baseUrl = 'http://192.168.1.52:8080/api/services';
+  static const String baseUrl = '$ipAddress/api/services';
   static const String baseProviderUrl =
-      'http://192.168.1.52:8080/api/service-providers';
+      '$ipAddress/api/service-providers';
 
   Future<List<ServiceProvider>> getProvidersByServiceId(int id) async {
     final response = await http.get(Uri.parse('$baseUrl/$id/providers'));

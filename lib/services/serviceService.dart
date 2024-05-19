@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:depanini/constants/const.dart';
 import 'package:depanini/models/serviceEntity.dart';
 import 'package:http/http.dart' as http;
 
 class ServiceService {
-  static const String baseUrl = 'http://192.168.1.52:8080/api/categories';
+  static const String baseUrl = '$ipAddress/api/categories';
 
   Future<List<ServiceEntity>> getServicesByCategoryId(int id) async {
     final response = await http.get(Uri.parse('$baseUrl/$id/services'));

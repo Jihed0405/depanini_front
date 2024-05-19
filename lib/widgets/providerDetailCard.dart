@@ -51,18 +51,28 @@ class _ServiceProviderDetailsViewState
             );
           } else {
             final ratingList = snapshot.data!;
-            String _comment = '';
-            int totalStar = 0;
+            double totalWorkRating = 0;
+            double totalDisciplineRating = 0;
+            double totalCostRating = 0;
+            int overallRating = 0;
+             String _comment = '';
             for (var rating in ratingList) {
-              _comment = rating.comment!;
-              totalStar += _controller.calculateOverallRating(
-                rating.workRating,
-                rating.disciplineRating,
-                rating.costRating,
-              );
+                 _comment = rating.comment!;
+              totalWorkRating += rating.workRating;
+              totalDisciplineRating += rating.disciplineRating;
+              totalCostRating += rating.costRating;
             }
 
-            int starsToShow = totalStar < 0 ? 0 : totalStar;
+            int totalReviews = ratingList.length;
+            if(totalReviews!=0)
+            {int averageWorkRating = totalWorkRating ~/ totalReviews;
+            int averageDisciplineRating = totalDisciplineRating ~/ totalReviews;
+            int averageCostRating = totalCostRating ~/ totalReviews;
+            overallRating = _controller.calculateOverallRating(
+                averageWorkRating, averageDisciplineRating, averageCostRating);
+            }
+            else{overallRating = 0;}
+           
             return Card(
               color: Colors.white70,
               margin: EdgeInsets.all(16.0),
@@ -102,17 +112,14 @@ class _ServiceProviderDetailsViewState
                             ),
                           ),
                           // Stars
-                          Row(children: [
-                            ...List.generate(
-                              starsToShow > 5 ? 0 : starsToShow,
-                              (index) =>
-                                  Icon(Icons.star, color: Color(0xFFebab01)),
-                            ),
-                            ...List.generate(
-                              starsToShow > 5 ? 5 : 5 - starsToShow,
-                              (index) => Icon(Icons.star, color: Colors.grey),
-                            ),
-                          ]),
+                          Row( children: List.generate(5, (index) {
+                              return Icon(
+                                index < overallRating
+                                    ? Icons.star
+                                    : Icons.star_border,
+                                color: Color(0xFFebab01),
+                              );
+                            }),),
                           SizedBox(height: 8.0),
                           // Commentary
                           Text(_comment),
