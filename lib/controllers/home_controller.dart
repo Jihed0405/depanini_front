@@ -3,9 +3,9 @@ import 'package:depanini/models/serviceProvider.dart';
 import 'package:depanini/services/ratingService.dart';
 import 'package:depanini/services/serviceProvidersService.dart';
 
-
 class HomeController {
-  final ServiceProvidersService _serviceProvidersService = ServiceProvidersService();
+  final ServiceProvidersService _serviceProvidersService =
+      ServiceProvidersService();
   final RatingService _ratingService = RatingService();
 
   Future<List<ServiceProvider>> getServiceProvidersMostQualified() async {

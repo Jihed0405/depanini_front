@@ -98,5 +98,21 @@ final serviceProviderNameProvider =
 );
 
 typedef _$ServiceProviderName = AutoDisposeNotifier<String>;
+String _$bottomNavIndexHash() => r'b23b85cd13326882b384698c5e01091d49258bd5';
+
+/// See also [bottomNavIndex].
+@ProviderFor(bottomNavIndex)
+final bottomNavIndexProvider =
+    AutoDisposeNotifierProvider<bottomNavIndex, int>.internal(
+  bottomNavIndex.new,
+  name: r'bottomNavIndexProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$bottomNavIndexHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$bottomNavIndex = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

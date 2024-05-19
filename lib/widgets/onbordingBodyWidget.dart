@@ -1,4 +1,3 @@
-
 import 'package:depanini/constants/size.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +12,7 @@ class onbordingBodyWidget extends StatelessWidget {
     required this.image,
   }) : super(key: key);
 
- @override
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Stack(
@@ -29,7 +28,7 @@ class onbordingBodyWidget extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: FractionallySizedBox(
-               heightFactor: 2 / 3,
+              heightFactor: 2 / 3,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -42,7 +41,8 @@ class onbordingBodyWidget extends StatelessWidget {
                     child: Text(
                       subTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: defaultTextSize, color: Colors.white),
+                      style: TextStyle(
+                          fontSize: defaultTextSize, color: Colors.white),
                     ),
                   ),
                 ],

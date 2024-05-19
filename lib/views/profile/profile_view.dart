@@ -21,7 +21,8 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     super.initState();
-    _userServiceFuture = Future.delayed(Duration(seconds: 1), () => _profileController.getUserById(7));
+    _userServiceFuture = Future.delayed(
+        Duration(seconds: 1), () => _profileController.getUserById(7));
   }
 
   @override
@@ -59,7 +60,8 @@ class _ProfileViewState extends State<ProfileView> {
                             baseColor: Colors.grey[300]!,
                             highlightColor: Colors.grey[100]!,
                             child: ClipRRect(
-                              borderRadius: const BorderRadius.all(Radius.circular(defaultRadius)),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(defaultRadius)),
                               child: Container(
                                 width: 100,
                                 height: 100,
@@ -69,12 +71,12 @@ class _ProfileViewState extends State<ProfileView> {
                           )
                         else
                           ClipRRect(
-                            borderRadius: const BorderRadius.all(Radius.circular(defaultRadius)),
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(defaultRadius)),
                             child: CachedNetworkImage(
                               imageUrl: userData!.photoUrl,
                               width: 100,
                               height: 100,
-                              
                               placeholder: (context, url) => Shimmer.fromColors(
                                 baseColor: Colors.grey[300]!,
                                 highlightColor: Colors.grey[100]!,
@@ -84,7 +86,8 @@ class _ProfileViewState extends State<ProfileView> {
                                   color: Colors.grey,
                                 ),
                               ),
-                              errorWidget: (context, url, error) => Icon(Icons.error),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
                             ),
                           ),
                         const SizedBox(height: defaultSpacing / 2),
@@ -117,7 +120,9 @@ class _ProfileViewState extends State<ProfileView> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
-                                    ?.copyWith(fontWeight: FontWeight.w700, color: fontHeading),
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        color: fontHeading),
                               ),
                               const SizedBox(height: defaultSpacing / 2),
                               Text(
@@ -144,7 +149,9 @@ class _ProfileViewState extends State<ProfileView> {
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
-                              ?.copyWith(fontWeight: FontWeight.w700, color: fontHeading),
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: fontHeading),
                         ),
                         const SizedBox(height: defaultSpacing / 4),
                         ProfileAccountInfoTile(
@@ -165,7 +172,9 @@ class _ProfileViewState extends State<ProfileView> {
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
-                              ?.copyWith(fontWeight: FontWeight.w700, color: fontHeading),
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: fontHeading),
                         ),
                         const SizedBox(height: defaultSpacing),
                         ProfileAccountInfoTile(

@@ -10,22 +10,27 @@ import 'package:shimmer/shimmer.dart';
 class ProviderDetailCard extends ConsumerStatefulWidget {
   final ServiceProvider serviceProvider;
 
-  ProviderDetailCard({Key? key, required this.serviceProvider}) : super(key: key);
+  ProviderDetailCard({Key? key, required this.serviceProvider})
+      : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ServiceProviderDetailsViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ServiceProviderDetailsViewState();
 }
 
-class _ServiceProviderDetailsViewState extends ConsumerState<ProviderDetailCard> {
+class _ServiceProviderDetailsViewState
+    extends ConsumerState<ProviderDetailCard> {
   final RatingService _ratingService = RatingService();
   late Future<List<Rating>> _ratingFuture;
-  final ServiceProviderCardController _controller = ServiceProviderCardController();
+  final ServiceProviderCardController _controller =
+      ServiceProviderCardController();
 
   @override
   void initState() {
     super.initState();
     final _providerId = widget.serviceProvider.id;
-    _ratingFuture = Future.delayed(Duration(seconds: 2), () => _ratingService.getRatingByProviderId(_providerId));
+    _ratingFuture = Future.delayed(Duration(seconds: 2),
+        () => _ratingService.getRatingByProviderId(_providerId));
   }
 
   @override
@@ -89,7 +94,7 @@ class _ServiceProviderDetailsViewState extends ConsumerState<ProviderDetailCard>
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                           Text(
+                          Text(
                             '${widget.serviceProvider.address} ',
                             style: TextStyle(
                               fontSize: 18,
@@ -100,7 +105,8 @@ class _ServiceProviderDetailsViewState extends ConsumerState<ProviderDetailCard>
                           Row(children: [
                             ...List.generate(
                               starsToShow > 5 ? 0 : starsToShow,
-                              (index) => Icon(Icons.star, color: Color(0xFFebab01)),
+                              (index) =>
+                                  Icon(Icons.star, color: Color(0xFFebab01)),
                             ),
                             ...List.generate(
                               starsToShow > 5 ? 5 : 5 - starsToShow,
@@ -159,8 +165,8 @@ class detailsCardOnload extends StatelessWidget {
                       height: 18.0,
                       color: Colors.grey,
                     ),
-                     SizedBox(height: 8.0),
-                      Container(
+                    SizedBox(height: 8.0),
+                    Container(
                       width: 170,
                       height: 18.0,
                       color: Colors.grey,
@@ -181,7 +187,6 @@ class detailsCardOnload extends StatelessWidget {
                       height: 18.0,
                       color: Colors.grey,
                     ),
-                   
                   ],
                 ),
               ),

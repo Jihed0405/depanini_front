@@ -100,11 +100,12 @@ class _onBoardingState extends State<onBoarding> {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 6), // Set button padding
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
                     child: Text(
                       "Get Started",
-                      style: TextStyle(color: Colors.white, fontSize: defaultTextButtonSize),
+                      style: TextStyle(
+                          color: Colors.white, fontSize: defaultTextButtonSize),
                     ),
                   ),
                 ))

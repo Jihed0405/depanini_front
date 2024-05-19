@@ -1,12 +1,12 @@
-
 import 'package:depanini/provider/provider.dart';
 import 'package:depanini/views/serviceProvider/serviceProvider_view.dart';
+import 'package:depanini/widgets/wrapperView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ServiceCard extends ConsumerStatefulWidget {
-  final  service;
-  
+  final service;
+
   const ServiceCard({
     Key? key,
     required this.service,
@@ -23,23 +23,22 @@ class _ServiceCardState extends ConsumerState<ServiceCard> {
     print("providers${ref.watch(serviceNameProvider)}");
     return GestureDetector(
       onTap: () {
- 
         String name = widget.service.name!;
-       
+
         int serviceId = widget.service.id!;
-        
+
         ref.read(serviceIdProvider.notifier).add(serviceId);
         ref.read(serviceNameProvider.notifier).add(name);
-        
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ServiceProviderView()),
+          MaterialPageRoute(
+              builder: (context) => WrapperView(view: ServiceProviderView())),
         );
+        ref.read(bottomNavIndexProvider.notifier).add(1);
       },
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-       
         ),
         padding: EdgeInsets.all(5),
         child: Column(
