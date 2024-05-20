@@ -114,5 +114,19 @@ final bottomNavIndexProvider =
 );
 
 typedef _$bottomNavIndex = AutoDisposeNotifier<int>;
+String _$userIdHash() => r'15b59c24f0b70520e2b32e8f771493fa6470c55d';
+
+/// See also [UserId].
+@ProviderFor(UserId)
+final userIdProvider = AutoDisposeNotifierProvider<UserId, int>.internal(
+  UserId.new,
+  name: r'userIdProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$userIdHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$UserId = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -5,6 +5,8 @@ class Rating {
   final int costRating;
   final String? comment;
   final String? reviewerName;
+   final int? serviceProviderId;
+  final int? userId;
   final DateTime date;
 
   Rating(
@@ -13,7 +15,9 @@ class Rating {
       required this.disciplineRating,
       required this.costRating,
       required this.comment,
-      required this.reviewerName,
+       this.reviewerName,
+       this.serviceProviderId,
+       this.userId,
       required this.date}) {}
   factory Rating.fromJson(Map<String, dynamic> json) {
     return Rating(
@@ -33,7 +37,8 @@ class Rating {
       'disciplineRating': disciplineRating,
       'costRating': costRating,
       'comment': comment,
-      'reviewerName': reviewerName,
+      'serviceProviderId':serviceProviderId,
+      'userId':userId,
       'date': date.toIso8601String(),
     };
    }

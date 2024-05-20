@@ -1,21 +1,23 @@
 import 'package:depanini/controllers/service_provider_card_controller.dart';
+import 'package:depanini/provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:depanini/models/serviceProvider.dart';
 import 'package:depanini/services/ratingService.dart';
 import 'package:depanini/models/rating.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ReviewsContent extends StatefulWidget {
+class ReviewsContent extends ConsumerStatefulWidget {
   final ServiceProvider serviceProvider;
 
   ReviewsContent({required this.serviceProvider});
 
   @override
-  _ReviewsContentState createState() => _ReviewsContentState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ReviewsContentState();
 }
 
-class _ReviewsContentState extends State<ReviewsContent> {
+class _ReviewsContentState extends ConsumerState<ReviewsContent> {
   final RatingService _ratingService = RatingService();
   late Future<List<Rating>> _ratingFuture;
   final ServiceProviderCardController _controller =
@@ -102,9 +104,7 @@ class _ReviewsContentState extends State<ReviewsContent> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
-                          onPressed: () {
-                            _showRatingModal(context, widget.serviceProvider);
-                          },
+                          onPressed: () {},
                           style: ElevatedButton.styleFrom(
                             primary: Color(0xFFebab01),
                             shape: RoundedRectangleBorder(
@@ -383,7 +383,30 @@ class _ReviewsContentState extends State<ReviewsContent> {
               disciplineRating, feesOfService, commentController),
         );
       },
-    );
+    ).then((result) {
+      if (result != null) {
+       
+        if (result['qualityOfService'] == 0 &&
+            result['disciplineRating'] == 0 &&
+            result['feesOfService'] == 0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text(
+                    'You chose to provide zero ratings for all categories.')),
+          );
+        }
+        if (result['comment'].isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('You added a rating with no comments.')),
+          );
+        }
+        else   if (result['success']) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Review added successfully.')),
+        );
+      }
+      }
+    });
   }
 
   Widget contentBox(
@@ -421,15 +444,18 @@ class _ReviewsContentState extends State<ReviewsContent> {
                 ),
               ),
               SizedBox(height: 16),
-              _buildRatingRowModal('Quality of service', qualityOfService,(rating) {
+              _buildRatingRowModal('Quality of service', qualityOfService,
+                  (rating) {
                 qualityOfService = rating;
               }),
               SizedBox(height: 8),
-              _buildRatingRowModal('Discipline Rating', disciplineRating,(rating) {
+              _buildRatingRowModal('Discipline Rating', disciplineRating,
+                  (rating) {
                 disciplineRating = rating;
               }),
               SizedBox(height: 8),
-              _buildRatingRowModal('Fees of the service', feesOfService,(rating) {
+              _buildRatingRowModal('Fees of the service', feesOfService,
+                  (rating) {
                 feesOfService = rating;
               }),
               SizedBox(height: 16),
@@ -480,9 +506,17 @@ class _ReviewsContentState extends State<ReviewsContent> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      // Add functionality to save the rating and comment
-                      Navigator.of(context).pop();
+                    onPressed: () async {
+                      bool success = await saveRating(qualityOfService, disciplineRating,
+                          feesOfService, commentController.text);
+
+                      Navigator.of(context).pop({
+                        'qualityOfService': qualityOfService,
+                        'disciplineRating': disciplineRating,
+                        'feesOfService': feesOfService,
+                        'comment': commentController.text,
+                        'success': success,
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Color(0xFFebab01),
@@ -501,34 +535,62 @@ class _ReviewsContentState extends State<ReviewsContent> {
     );
   }
 
-  Widget _buildRatingRowModal(
-      String title, double initialRating,void Function(double) onRatingUpdate) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(title, style: TextStyle(fontSize: 16)),
-      SizedBox(height: 4),
-      RatingBar.builder(
-        initialRating: initialRating,
-        minRating: 1,
-        direction: Axis.horizontal,
-        allowHalfRating: false,
-        itemCount: 5,
-        itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-        itemBuilder: (context, index) => Icon(
-          index < initialRating ? Icons.star : Icons.star_border,
-          color: Color(0xFFebab01),
+  Widget _buildRatingRowModal(String title, double initialRating,
+      void Function(double) onRatingUpdate) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: TextStyle(fontSize: 16)),
+        SizedBox(height: 4),
+        RatingBar.builder(
+          initialRating: initialRating,
+          minRating: 1,
+          direction: Axis.horizontal,
+          allowHalfRating: false,
+          itemCount: 5,
+          itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+          itemBuilder: (context, index) => Icon(
+            index < initialRating ? Icons.star : Icons.star_border,
+            color: Color(0xFFebab01),
+          ),
+          onRatingUpdate: (rating) {
+            setState(() {
+              initialRating = rating;
+            });
+            onRatingUpdate(rating);
+          },
+          unratedColor: Colors.grey,
         ),
-         onRatingUpdate: (rating) {
-              setState(() {
-                initialRating = rating;
-              });
-              onRatingUpdate(rating);
-            },
-        
-        unratedColor: Colors.grey,
-      ),
-    ],
-  );
+      ],
+    );
+  }
+
+  Future<bool> saveRating(double qualityOfService, double disciplineRating,
+      double feesOfService, String comment) async {
+    Rating newRating = Rating(
+      id: 0, // ID should be generated by the backend
+      workRating: qualityOfService.toInt(),
+      disciplineRating: disciplineRating.toInt(),
+      costRating: feesOfService.toInt(),
+      comment: comment,
+
+      serviceProviderId: widget.serviceProvider.id,
+      userId: ref.watch(userIdProvider), // Update with the actual user ID
+      date: DateTime.now(),
+    );
+
+    try {
+      Rating createdRating = await _ratingService.addRate(newRating);
+      setState(() {
+        _ratingFuture = Future.delayed(
+            Duration(seconds: 2),
+            () => _ratingService
+                .getRatingByProviderId(widget.serviceProvider.id));
+      });
+      return true; 
+    } catch (e) {
+      print('Failed to create a rate for a provider: $e');
+      return false;
+    }
   }
 }
