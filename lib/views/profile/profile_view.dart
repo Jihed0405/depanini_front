@@ -6,27 +6,29 @@ import 'package:depanini/models/user.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:depanini/widgets/profile_account_info_tile.dart';
 import 'package:flutter/material.dart';
-
-class ProfileView extends StatefulWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:depanini/provider/provider.dart';
+class ProfileView extends ConsumerStatefulWidget {
   const ProfileView({super.key});
 
   @override
-  State<ProfileView> createState() => _ProfileViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ProfileViewState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
+class _ProfileViewState extends ConsumerState<ProfileView> {
   final ProfileController _profileController = ProfileController();
   late Future<User> _userServiceFuture;
 
   @override
   void initState() {
     super.initState();
-    _userServiceFuture = Future.delayed(
-        Duration(seconds: 2), () => _profileController.getUserById(7));
+    
   }
 
   @override
   Widget build(BuildContext context) {
+    _userServiceFuture = Future.delayed(
+        Duration(seconds: 2), () => _profileController.getUserById(ref.watch(userIdProvider)));
     return Scaffold(
       backgroundColor: background,
       appBar: AppBar(

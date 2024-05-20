@@ -7,7 +7,8 @@ import 'package:depanini/models/rating.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 class ReviewsContent extends ConsumerStatefulWidget {
   final ServiceProvider serviceProvider;
 
@@ -45,6 +46,7 @@ class _ReviewsContentState extends ConsumerState<ReviewsContent> {
             );
           } else {
             final ratingList = snapshot.data!;
+          
             if (ratingList.isEmpty) {
               return Card(
                 elevation: 4,
@@ -121,6 +123,14 @@ class _ReviewsContentState extends ConsumerState<ReviewsContent> {
                           ),
                         ),
                       ),
+                        SizedBox(height: 16),
+                     ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: 0, // Set itemCount to 0 initially
+                    itemBuilder: (context, index) {
+                      return Container(); // Return an empty container initially
+                    },)
                     ],
                   ),
                 ),
@@ -225,7 +235,92 @@ class _ReviewsContentState extends ConsumerState<ReviewsContent> {
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
-                    ),
+                    ), SizedBox(height: 16),
+                // Place ListView.builder here
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: ratingList.length,
+                  itemBuilder: (context, index) {
+                    Rating rating = ratingList[index];
+                      
+            int overallRating = 0;
+  print("see the rating is:${rating.photoUrl}");
+         String? _comment = '';
+         _comment = rating.comment;
+            overallRating = _controller.calculateOverallRating(
+                rating.workRating, rating.disciplineRating, rating.costRating);
+                    // Display user comments with images, star ratings, and comments
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                           Row(
+            children: [
+                          // User image
+                         ClipOval(
+  child: CachedNetworkImage(
+    imageUrl: rating.photoUrl!,
+    width: 40, // Adjust the width of the image
+    height: 40, // Adjust the height of the image
+    fit: BoxFit.cover,
+  ),
+),
+                          SizedBox(width: 8),
+                           Text(
+                rating.reviewerName!,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              // Displaying the date
+              ],
+          ),
+          SizedBox(height: 8),
+          // Star ratings
+                          // Star ratings
+                          Row(
+                             mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: List.generate(5, (index) {
+                                  return Icon(
+                                    index < overallRating
+                                        ? Icons.star
+                                        : Icons.star_border,
+                                    color: Color(0xFFebab01),
+                                  );
+                                }),
+                              ),
+                               SizedBox(width: 8),
+                               Text(
+                DateFormat.yMMMd().format(rating.date), // Format the date
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          // User comment
+                          Text(
+                            _comment!,
+                            style: TextStyle(fontSize: 16),
+                          // Implement "show more" and "show less" for long comments
+            maxLines: 3, // Show only 3 lines initially
+            overflow: TextOverflow.ellipsis, // Overflow with ellipsis
+          ),SizedBox(height: 8),
+          // "Less" and "More" button
+          TextButton(
+            onPressed: () {
+              // Implement your logic to toggle between "Less" and "More"
+            },
+            child: Text(
+              'More', // Change to "Less" or "More" based on the state
+              style: TextStyle(color: Colors.blue),
+            ),
+          ),
+                          SizedBox(height: 16),
+                        
+                        ],),);}),
+                   
                   ],
                 ),
               ),

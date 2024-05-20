@@ -5,7 +5,7 @@ class User {
   final String email;
   final String phoneNumber;
   final String address;
-  late String photoUrl;
+  final String photoUrl;
 
   User(
       {required this.id,
@@ -13,8 +13,9 @@ class User {
       required this.lastName,
       required this.email,
       required this.phoneNumber,
-      required this.address}) {
-    photoUrl = "https://imgur.com/VCQ7Yln.jpg";
+      required this.address,
+      required this.photoUrl}) {
+    
   }
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -23,6 +24,9 @@ class User {
         lastName: json['lastName'],
         email: json['email'],
         phoneNumber: json['phoneNumber'],
-        address: json['address']);
+        address: json['address'],
+        photoUrl:json['photoUrl']
+        );
+        
   }
 }

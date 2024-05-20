@@ -7,6 +7,7 @@ class Rating {
   final String? reviewerName;
    final int? serviceProviderId;
   final int? userId;
+  final String?photoUrl;
   final DateTime date;
 
   Rating(
@@ -16,6 +17,7 @@ class Rating {
       required this.costRating,
       required this.comment,
        this.reviewerName,
+       this.photoUrl,
        this.serviceProviderId,
        this.userId,
       required this.date}) {}
@@ -27,6 +29,7 @@ class Rating {
       costRating: json['costRating'],
       comment: json['comment'],
       reviewerName: json['user']['firstName'] + ' ' + json['user']['lastName'],
+      photoUrl:json['user']['photoUrl'],
       date: DateTime.parse(json['date']),
     );
   }

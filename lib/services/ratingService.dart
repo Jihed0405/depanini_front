@@ -12,6 +12,7 @@ class RatingService {
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = json.decode(response.body);
+    
       print(jsonList.map((json) => Rating.fromJson(json)).toList());
       return jsonList.map((json) => Rating.fromJson(json)).toList();
     } else {
