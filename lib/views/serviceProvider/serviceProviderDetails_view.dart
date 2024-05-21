@@ -4,7 +4,6 @@ import 'package:depanini/models/rating.dart';
 import 'package:depanini/models/serviceProvider.dart';
 import 'package:depanini/provider/provider.dart';
 import 'package:depanini/services/ratingService.dart';
-import 'package:depanini/views/chat/message_view.dart';
 import 'package:depanini/widgets/reviewsContent.dart';
 
 import 'package:flutter/material.dart';

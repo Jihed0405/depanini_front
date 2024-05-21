@@ -1,6 +1,6 @@
 import 'package:depanini/models/serviceProvider.dart';
 import 'package:depanini/services/serviceProvidersService.dart';
-import 'package:depanini/views/chat/message_view.dart';
+import 'package:depanini/views/chat/chat_view.dart';
 import 'package:depanini/widgets/wrapperView.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,7 +31,7 @@ class ServiceProviderDetailsController {
   Future<void> sendMessage(BuildContext context) async {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => WrapperView(view: MessageView())),
+      MaterialPageRoute(builder: (context) => WrapperView(view: ChatView())),
     );
   }
 }

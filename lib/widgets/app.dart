@@ -1,7 +1,7 @@
 import 'package:depanini/widgets/mainLayout.dart';
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:depanini/routes.dart';
+
+
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -11,8 +11,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  int _page = 0;
-  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
