@@ -97,32 +97,47 @@ class _ChatViewState extends State<ChatView> {
     );
   }
 
-  Widget _buildChatList(List<Message> messages, List<User> users) {
-    return ListView.builder(
-      itemCount: messages.length,
-      itemBuilder: (context, index) {
-        Message message = messages[index];
-        User user = users.firstWhere((u) => u.id == message.senderId || u.id == message.receiverId);
+Widget _buildChatList(List<Message> messages, List<User> users) {
+  // Group messages by user ID
+  Map<int, List<Message>> messagesByUser = {};
 
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(user.photoUrl),
-          ),
-          title: Text("${user.firstName} ${user.lastName}"),
-          subtitle: Text(message.content),
-          onTap: () {
-            // Navigate to ChatDetailScreen
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ChatDetailScreen(user: user),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
+  messages.forEach((message) {
+    int userId = message.senderId == 10 ? message.receiverId : message.senderId;
+    messagesByUser[userId] ??= [];
+    messagesByUser[userId]!.add(message);
+  });
+
+  return ListView.builder(
+    itemCount: messagesByUser.length,
+    itemBuilder: (context, index) {
+      int userId = messagesByUser.keys.toList()[index];
+      User user = users.firstWhere((u) => u.id == userId);
+      List<Message> userMessages = messagesByUser[userId]!;
+
+      // Choose the last message to display in the chat list
+      Message lastMessage = userMessages.last;
+
+      return ListTile(
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(user.photoUrl),
+        ),
+        title: Text("${user.firstName} ${user.lastName}"),
+        subtitle: Text(lastMessage.content),
+        onTap: () {
+          // Navigate to ChatDetailScreen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatDetailScreen(user: user),
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+  
 
   Future<List<User>> _extractUsersFromMessages(List<Message> messages) async {
     List<User> users = [];

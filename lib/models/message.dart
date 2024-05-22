@@ -1,3 +1,6 @@
+import 'package:depanini/constants/const.dart';
+import 'package:path/path.dart' as path;
+
 class Message {
   final int id;
   final int senderId;
@@ -13,6 +16,8 @@ class Message {
     required this.messageType,
     this.date
   });
+String get mediaUrl => "$ipAddress/api/messages/files/${senderId}_$receiverId/${path.basename(content)}";
+
 
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
