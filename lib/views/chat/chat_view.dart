@@ -1,11 +1,10 @@
-
 import 'package:depanini/models/message.dart';
 import 'package:depanini/models/user.dart';
 import 'package:depanini/services/messageService.dart';
 import 'package:depanini/services/userService.dart';
 import 'package:depanini/widgets/chatDetailScreen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ChatView extends StatefulWidget {
   const ChatView({super.key});
@@ -17,15 +16,24 @@ class ChatView extends StatefulWidget {
 class _ChatViewState extends State<ChatView> {
   final MessageService messageService = MessageService();
   final UserService userService = UserService();
+  final int currentUserId = 10; // Example current user ID
+
+  late Future<List<Message>> _messagesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _messagesFuture = messageService.getMessages(senderId: currentUserId, receiverId: 5);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('chat'),
+        title: Text('Chat'),
       ),
       body: FutureBuilder(
-        future: messageService.getMessages(senderId: 10, receiverId: 5), // Example senderId and receiverId
+        future: _messagesFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -67,6 +75,9 @@ class _ChatViewState extends State<ChatView> {
         itemCount: users.length,
         itemBuilder: (context, index) {
           User user = users[index];
+          if (user.id == currentUserId) {
+            return Container(); // Skip the current user
+          }
           return GestureDetector(
             onTap: () {
               // Navigate to ChatDetailScreen
@@ -78,16 +89,15 @@ class _ChatViewState extends State<ChatView> {
               );
             },
             child: Padding(
-             padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(
                 children: [
                   CircleAvatar(
                     radius: 30.0,
-                    backgroundImage: NetworkImage(user.photoUrl),
+                    backgroundImage: CachedNetworkImageProvider(user.photoUrl),
                   ),
                   SizedBox(height: 5.0),
                   Text("${user.firstName}"),
-                  
                 ],
               ),
             ),
@@ -97,47 +107,45 @@ class _ChatViewState extends State<ChatView> {
     );
   }
 
-Widget _buildChatList(List<Message> messages, List<User> users) {
-  // Group messages by user ID
-  Map<int, List<Message>> messagesByUser = {};
+  Widget _buildChatList(List<Message> messages, List<User> users) {
+    // Group messages by user ID
+    Map<int, List<Message>> messagesByUser = {};
 
-  messages.forEach((message) {
-    int userId = message.senderId == 10 ? message.receiverId : message.senderId;
-    messagesByUser[userId] ??= [];
-    messagesByUser[userId]!.add(message);
-  });
+    messages.forEach((message) {
+      int userId = message.senderId == currentUserId ? message.receiverId : message.senderId;
+      messagesByUser[userId] ??= [];
+      messagesByUser[userId]!.add(message);
+    });
 
-  return ListView.builder(
-    itemCount: messagesByUser.length,
-    itemBuilder: (context, index) {
-      int userId = messagesByUser.keys.toList()[index];
-      User user = users.firstWhere((u) => u.id == userId);
-      List<Message> userMessages = messagesByUser[userId]!;
+    return ListView.builder(
+      itemCount: messagesByUser.length,
+      itemBuilder: (context, index) {
+        int userId = messagesByUser.keys.toList()[index];
+        User user = users.firstWhere((u) => u.id == userId);
+        List<Message> userMessages = messagesByUser[userId]!;
 
-      // Choose the last message to display in the chat list
-      Message lastMessage = userMessages.last;
+        // Choose the last message to display in the chat list
+        Message lastMessage = userMessages.last;
 
-      return ListTile(
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(user.photoUrl),
-        ),
-        title: Text("${user.firstName} ${user.lastName}"),
-        subtitle: Text(lastMessage.content),
-        onTap: () {
-          // Navigate to ChatDetailScreen
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChatDetailScreen(user: user),
-            ),
-          );
-        },
-      );
-    },
-  );
-}
-
-  
+        return ListTile(
+          leading: CircleAvatar(
+            backgroundImage: CachedNetworkImageProvider(user.photoUrl),
+          ),
+          title: Text("${user.firstName} ${user.lastName}"),
+          subtitle: Text(lastMessage.content),
+          onTap: () {
+            // Navigate to ChatDetailScreen
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatDetailScreen(user: user),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   Future<List<User>> _extractUsersFromMessages(List<Message> messages) async {
     List<User> users = [];

@@ -5,112 +5,122 @@ import 'package:depanini/widgets/onbordingBodyWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-List<OnbordingModel> onbording = [
-  OnbordingModel(
-      title: "Discover Artisan Gems",
-      subTitle:
-          "Unearth exceptional artisans tailored to your needs with ease.",
-      image: "assets/images/onboarding1.jpg"),
-  OnbordingModel(
-      title: "Seamless Artisan Communication",
-      subTitle:
-          " Forge direct connections with artisans through effortless messaging.",
-      image: "assets/images/onboarding1.jpg"),
-  OnbordingModel(
-      title: "Empower Artisans, Rate Excellence",
-      subTitle:
-          "Empower artisans and shape our community with your valuable feedback.",
-      image: "assets/images/onboarding1.jpg"),
+List<OnboardingModel> onboarding = [
+  OnboardingModel(
+    title: "Discover Artisan Gems",
+    subTitle: "Unearth exceptional artisans tailored to your needs with ease.",
+    imageUrl: "https://i.imgur.com/FqRO95T.jpeg", // Replace with actual URL
+  ),
+  OnboardingModel(
+    title: "Seamless Artisan Communication",
+    subTitle: "Forge direct connections with artisans through effortless messaging.",
+    imageUrl: "https://i.imgur.com/IkyK6L2.jpeg", // Replace with actual URL
+  ),
+  OnboardingModel(
+    title: "Empower Artisans, Rate Excellence",
+    subTitle: "Empower artisans and shape our community with your valuable feedback.",
+    imageUrl: "https://i.imgur.com/3XZIp53.jpeg", // Replace with actual URL
+  ),
 ];
 
-class OnbordingModel {
+class OnboardingModel {
   String title;
   String subTitle;
-  String image;
-  OnbordingModel(
-      {required this.title, required this.subTitle, required this.image});
+  String imageUrl; // Change from 'image' to 'imageUrl'
+  OnboardingModel({
+    required this.title,
+    required this.subTitle,
+    required this.imageUrl, // Change from 'image' to 'imageUrl'
+  });
 }
 
 class onBoarding extends StatefulWidget {
-  const onBoarding({super.key});
+  const onBoarding({Key? key}) : super(key: key);
 
   @override
-  State<onBoarding> createState() => _onBoardingState();
+  State<onBoarding> createState() => _OnboardingState();
 }
 
-class _onBoardingState extends State<onBoarding> {
-  int pagesLength = 3;
+class _OnboardingState extends State<onBoarding> {
   final PageController _onboardController = PageController();
   bool lastPage = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-            child: Stack(
-      children: [
-        PageView(
-          onPageChanged: (value) => {
-            setState(() {
-              lastPage = (value == 2);
-            })
-          },
-          controller: _onboardController,
+      body: SafeArea(
+        child: Stack(
           children: [
-            onbordingBodyWidget(
-                title: onbording[0].title,
-                image: onbording[0].image,
-                subTitle: onbording[0].subTitle),
-            onbordingBodyWidget(
-                title: onbording[1].title,
-                image: onbording[1].image,
-                subTitle: onbording[1].subTitle),
-            onbordingBodyWidget(
-                title: onbording[2].title,
-                image: onbording[2].image,
-                subTitle: onbording[2].subTitle),
+            PageView(
+              onPageChanged: (value) => {
+                setState(() {
+                  lastPage = (value == onboarding.length - 1);
+                })
+              },
+              controller: _onboardController,
+              children: onboarding.map((item) {
+                return OnboardingBodyWidget(
+                  title: item.title,
+                  imageUrl: item.imageUrl, // Change from 'image' to 'imageUrl'
+                  subTitle: item.subTitle,
+                );
+              }).toList(),
+            ),
+            Positioned(
+              bottom: 5,
+              left: 0,
+              right: 0,
+              child: SmoothPageIndicator(
+                controller: _onboardController,
+                count: onboarding.length,
+                effect: const ExpandingDotsEffect(
+                  activeDotColor: selectedPageColor,
+                  dotHeight: 12,
+                  dotWidth: 12,
+                  dotColor: onbordingColor,
+                ),
+              ),
+            ),
+            if (lastPage)
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).padding.bottom + 40,
+                    left: 20,
+                    right: 20,
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const App()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFebab01),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 24,
+                      ),
+                      child: Text(
+                        "Get Started",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: defaultTextButtonSize,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
-        Positioned(
-            bottom: 50,
-            left: 175,
-            child: SmoothPageIndicator(
-                controller: _onboardController,
-                count: pagesLength,
-                effect: const SwapEffect(
-                    activeDotColor: selectedPageColor,
-                    dotHeight: 16,
-                    dotWidth: 16,
-                    dotColor: onbordingColor))),
-        lastPage
-            ? Positioned(
-                bottom: 120,
-                right: 10,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const App()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        const Color(0xFFebab01), // Set button background color
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(10), // Set button border radius
-                    ),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
-                    child: Text(
-                      "Get Started",
-                      style: TextStyle(
-                          color: Colors.white, fontSize: defaultTextButtonSize),
-                    ),
-                  ),
-                ))
-            : Container()
-      ],
-    )));
+      ),
+    );
   }
 }
