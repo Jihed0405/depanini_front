@@ -31,6 +31,7 @@ class Rating {
       reviewerName: json['user']['firstName'] + ' ' + json['user']['lastName'],
       photoUrl:json['user']['photoUrl'],
       date: DateTime.parse(json['date']),
+      userId: json['user']['id']
     );
   }
    Map<String, dynamic> toJson() {
