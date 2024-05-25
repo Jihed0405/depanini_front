@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:depanini/constants/const.dart';
+import 'package:depanini/controllers/api_exception.dart';
 import 'package:depanini/models/rating.dart';
 
 import 'package:http/http.dart' as http;
@@ -39,13 +40,18 @@ class RatingService {
       body: json.encode(data),
     );
 
-    print("the response is ${response.body}");
+ print("HTTP Status Code: ${response.statusCode}");
+  print("Response Body: ${response.body}");
 
     if (response.statusCode == 201) {
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
       return Rating.fromJson(jsonResponse);
+    } else if (response.statusCode == 400) {
+    print("Error Message: ${response.body}");
+      throw ApiException(response.body);
     } else {
-      throw Exception('Failed to create a rate for a provider');
+     
+      throw ApiException('Failed to add rating. Status code: ${response.statusCode}');
     }
   }
 }
