@@ -72,4 +72,32 @@ request.files.add(await http.MultipartFile.fromPath(
       throw Exception('Failed to load messages');
     }
   }
+  Future<List<Message>> getUserMessages(int userId) async {
+    try {
+      // Construct the URL with query parameters to fetch messages for the current user
+      var url = Uri.parse('$baseUrl/user-messages?userId=$userId');
+
+      // Make a GET request to the endpoint
+      var response = await http.get(url);
+
+      // Check if the response status code is OK (200)
+      if (response.statusCode == 200) {
+        // Decode the JSON response body
+        List<dynamic> jsonList = jsonDecode(response.body);
+
+        // Map the JSON list to a list of Message objects
+        List<Message> messages = jsonList.map((e) => Message.fromJson(e)).toList();
+
+        return messages;
+      } else {
+        // If the response status code is not OK, throw an exception
+        print('Failed to load messages. Status code: ${response.statusCode}');
+        throw Exception('Failed to load messages');
+      }
+    } catch (e) {
+      // Catch any exceptions thrown during the process
+      print('Failed to fetch messages: $e');
+      throw Exception('Failed to fetch messages');
+    }
+  }
 }

@@ -24,6 +24,7 @@ String get mediaUrl => "$ipAddress/api/messages/files/${senderId}_$receiverId/${
       id: json['id'],
       senderId: json['sender']['id'],
       receiverId: json['receiver']['id'],
+      
       content: json['content'],
       date:DateTime.parse(json['timestamp']),
       messageType: json['messageType'],

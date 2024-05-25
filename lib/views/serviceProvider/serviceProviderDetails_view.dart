@@ -461,7 +461,7 @@ class _ServiceProviderDetailsViewState
             onPressed: () {
               ref.read(bottomNavIndexProvider.notifier).add(2);
               // Add your message functionality here
-              _controller.sendMessage(context);
+              _controller.sendMessage(context,ref.watch(serviceProviderIdProvider));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xFFebab01),

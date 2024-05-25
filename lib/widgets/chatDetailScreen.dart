@@ -1,21 +1,23 @@
 import 'package:depanini/models/message.dart';
 import 'package:depanini/models/user.dart';
+import 'package:depanini/provider/provider.dart';
 import 'package:depanini/services/messageService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 
-class ChatDetailScreen extends StatefulWidget {
+class ChatDetailScreen extends ConsumerStatefulWidget {
   final User user;
 
   ChatDetailScreen({required this.user});
 
   @override
-  _ChatDetailScreenState createState() => _ChatDetailScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ChatDetailScreenState();
 }
 
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
+class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   final TextEditingController _messageController = TextEditingController();
   final MessageService _messageService = MessageService();
   final ImagePicker _imagePicker = ImagePicker();
@@ -24,19 +26,30 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   int? _selectedMessageIndex;
   bool _isLoading = true;
  final ScrollController _scrollController = ScrollController();
+ late int currentUserId;
   @override
   void initState() {
     super.initState();
-    _fetchMessages();
-    
+       Future.delayed(Duration.zero, () {
+    _fetchMessages(); 
+  });
+     _scrollToEnd(); 
   }
+  @override
+void dispose() {
+  _scrollController.dispose(); // Dispose the scroll controller
+  super.dispose();
+}
 
   Future<void> _fetchMessages() async {
     try {
-      List<Message> messages = await _messageService.getMessages(senderId: 10, receiverId: widget.user.id);
+      List<Message> messages = await _messageService.getMessages(senderId: currentUserId, receiverId: widget.user.id);
       setState(() {
         _messages = messages;
         _isLoading = false;
+      });
+       WidgetsBinding.instance?.addPostFrameCallback((_) {
+       _scrollToEnd();
       });
       
     } catch (error) {
@@ -48,8 +61,20 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
     }
   }
 
+  void _scrollToEnd() {
+       try {
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    }
+  } catch (e) {
+    print("Error while scrolling to end: $e");
+  }
+  }
+
   @override
   Widget build(BuildContext context) {
+    currentUserId = ref.watch(userIdProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -67,66 +92,74 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           Expanded(
             child: _isLoading
                 ? Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                  controller: _scrollController,
-                    itemCount: _messages.length,
-                    itemBuilder: (context, index) {
-                      Message message = _messages[index];
-                      bool isSentByMe = message.senderId == 10; // Replace with current user's id
-                      bool isSelected = _selectedMessageIndex == index;
-
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedMessageIndex = isSelected ? null : index;
-                          });
-                        },
-                        child: Column(
-                          crossAxisAlignment: isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                          children: [
-                            if (message.messageType == 'MEDIA' && _isImageUrl(message.mediaUrl))
-                              _buildMediaContent(message),
-                            if (message.messageType != 'MEDIA')
-                              Align(
-                                alignment: isSentByMe ? Alignment.centerRight : Alignment.centerLeft,
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                  decoration: BoxDecoration(
-                                    color: isSentByMe ? Color(0xFF7945ff) : Colors.grey,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text(
-                                    message.content,
-                                    style: TextStyle(
-                                      color: Colors.white,
+                : NotificationListener<ScrollEndNotification>(
+                    onNotification: (scrollEnd) {
+                      if (_scrollController.position.extentAfter == 0) {
+                        _scrollToEnd();
+                      }
+                      return false;
+                    },
+                  child: ListView.builder(
+                    controller: _scrollController,
+                      itemCount: _messages.length,
+                      itemBuilder: (context, index) {
+                        Message message = _messages[index];
+                        bool isSentByMe = message.senderId == currentUserId; 
+                        bool isSelected = _selectedMessageIndex == index;
+                  
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedMessageIndex = isSelected ? null : index;
+                            });
+                          },
+                          child: Column(
+                            crossAxisAlignment: isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                            children: [
+                              if (message.messageType == 'MEDIA' && _isImageUrl(message.mediaUrl))
+                                _buildMediaContent(message),
+                              if (message.messageType != 'MEDIA')
+                                Align(
+                                  alignment: isSentByMe ? Alignment.centerRight : Alignment.centerLeft,
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                    decoration: BoxDecoration(
+                                      color: isSentByMe ? Color(0xFF7945ff) : Colors.grey,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Text(
+                                      message.content,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            AnimatedCrossFade(
-                              firstChild: SizedBox.shrink(),
-                              secondChild: Container(
-                                margin: EdgeInsets.only(left: 10, right: 10),
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5),
+                              AnimatedCrossFade(
+                                firstChild: SizedBox.shrink(),
+                                secondChild: Container(
+                                  margin: EdgeInsets.only(left: 10, right: 10),
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Text(
+                                    _formatDate(message.date!),
+                                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                                  ),
                                 ),
-                                child: Text(
-                                  _formatDate(message.date!),
-                                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                                ),
+                                crossFadeState: isSelected ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                                duration: Duration(milliseconds: 300),
                               ),
-                              crossFadeState: isSelected ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-                              duration: Duration(milliseconds: 300),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    
-                  ),
+                            ],
+                          ),
+                        );
+                      },
+                      
+                    ),
+                ),
           ),
           _buildMessageInput(),
         ],
@@ -177,7 +210,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
 
     try {
       await _messageService.sendMessage(
-        senderId: 10, // Replace with current user's id
+        senderId: currentUserId, 
         receiverId: widget.user.id,
         content: content,
         messageType: file != null ? 'MEDIA' : 'TEXT',
@@ -189,7 +222,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         _selectedImage = null;
       });
 
-      _fetchMessages(); // Optionally, you can refresh the chat messages
+      _fetchMessages(); 
+      _scrollToEnd();
+      // Optionally, you can refresh the chat messages
     } catch (error) {
       // Handle the error
     }
