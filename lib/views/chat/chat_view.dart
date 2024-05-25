@@ -10,7 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChatView extends ConsumerStatefulWidget {
   const ChatView({super.key});
-
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatViewState();
 }
@@ -18,16 +17,12 @@ class ChatView extends ConsumerStatefulWidget {
 class _ChatViewState extends ConsumerState<ChatView> {
   final MessageService messageService = MessageService();
   final UserService userService = UserService();
-  
-
   late Future<List<Message>> _messagesFuture;
 late int currentUserId;
 bool _isMessagesFutureInitialized = false; 
   @override
   void initState() {
     super.initState();
-    
-  
   }
   @override
   void didChangeDependencies() {
@@ -41,10 +36,7 @@ bool _isMessagesFutureInitialized = false;
       return true;
     });
   }
-  
-
   Future<void> _fetchMessages() async {
-  
   try {
    if (currentUserId != null) {
       _messagesFuture = messageService.getUserMessages(currentUserId);
@@ -62,13 +54,8 @@ bool _isMessagesFutureInitialized = false;
     });
   }
 }
-
   @override
   Widget build(BuildContext context) {
-   
-
-    
-   
     return Scaffold(
       appBar: AppBar(
         title: Text('Chat'),
@@ -118,7 +105,6 @@ bool _isMessagesFutureInitialized = false;
       ),
     );
   }
-
   Widget _buildHorizontalUserList(List<User> users) {
     return Container(
       height: 100.0,
@@ -161,17 +147,13 @@ bool _isMessagesFutureInitialized = false;
       ),
     );
   }
-
   Widget _buildChatList(List<Message> messages, List<User> users) {
-    // Group messages by user ID
     Map<int, List<Message>> messagesByUser = {};
-
     messages.forEach((message) {
       int userId = message.senderId == currentUserId ? message.receiverId : message.senderId;
       messagesByUser[userId] ??= [];
       messagesByUser[userId]!.add(message);
     });
-
     return ListView.builder(
       itemCount: messagesByUser.length,
       itemBuilder: (context, index) {
@@ -216,25 +198,21 @@ bool _isMessagesFutureInitialized = false;
       },
     );
   }
-
   Future<List<User>> _extractUsersFromMessages(List<Message> messages) async {
     List<User> users = [];
     Set<int> userIds = Set();
-
     for (Message message in messages) {
       if (!userIds.contains(message.senderId)) {
         User user = await userService.getUserById(message.senderId);
         users.add(user);
         userIds.add(message.senderId);
       }
-
       if (!userIds.contains(message.receiverId)) {
         User user = await userService.getUserById(message.receiverId);
         users.add(user);
         userIds.add(message.receiverId);
       }
     }
-
     return users;
   }
 }
