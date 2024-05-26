@@ -100,4 +100,40 @@ request.files.add(await http.MultipartFile.fromPath(
       throw Exception('Failed to fetch messages');
     }
   }
+
+  Future<void> updateSeenDate({required List<int> messageIds, required int userId}) async {
+    try {
+      // Construct the URL with the updateSeenDate endpoint
+      var url = Uri.parse('$baseUrl/updateSeenDate');
+
+      // Create a map containing the message IDs and user ID data
+      Map<String, dynamic> requestData = {
+        'messageIds': messageIds,
+        'userId': userId,
+      };
+
+      // Convert the map to a JSON string
+      String jsonData = jsonEncode(requestData);
+
+      // Make a POST request to the updateSeenDate endpoint
+      var response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonData,
+      );
+
+      // Check if the response status code is OK (200)
+      if (response.statusCode == 200) {
+        print('Seen date updated successfully');
+      } else {
+        // If the response status code is not OK, throw an exception
+        print('Failed to update seen date. Status code: ${response.statusCode}');
+        throw Exception('Failed to update seen date');
+      }
+    } catch (e) {
+      // Catch any exceptions thrown during the process
+      print('Failed to update seen date: $e');
+      throw Exception('Failed to update seen date: $e');
+    }
+  }
 }

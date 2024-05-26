@@ -67,7 +67,7 @@ class bottomNavIndex extends _$bottomNavIndex {
 @riverpod
 class UserId extends _$UserId {
   @override
-  int build() => 10;
+  int build() => 8;
   void add(int newId) {
     state = newId;
   }

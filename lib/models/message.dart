@@ -8,13 +8,15 @@ class Message {
   final String content;
   final String messageType;
   final DateTime? date;
+  DateTime? seenDate;
   Message({
     required this.id,
     required this.senderId,
     required this.receiverId,
     required this.content,
     required this.messageType,
-    this.date
+    this.date,
+    this.seenDate,
   });
 String get mediaUrl => "$ipAddress/api/messages/files/${senderId}_$receiverId/${path.basename(content)}";
 
@@ -24,10 +26,10 @@ String get mediaUrl => "$ipAddress/api/messages/files/${senderId}_$receiverId/${
       id: json['id'],
       senderId: json['sender']['id'],
       receiverId: json['receiver']['id'],
-      
       content: json['content'],
       date:DateTime.parse(json['timestamp']),
       messageType: json['messageType'],
+       seenDate: json['seenDate'] != null ? DateTime.parse(json['seenDate']) : null,
     );
   }
 }
