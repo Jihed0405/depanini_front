@@ -8,6 +8,9 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:depanini/constants/color.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:path_provider/path_provider.dart';
+
 class ChatDetailScreen extends ConsumerStatefulWidget {
   final User user;
 
@@ -44,6 +47,29 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   void _updateButtonState() {
     setState(() {});
   }
+
+
+Future<File> _compressImage(File imageFile) async {
+  final tempDir = await getTemporaryDirectory();
+  final uniqueFileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+final targetPath = path.join(tempDir.path, uniqueFileName);
+
+  
+  File image = File(imageFile.path);
+
+ 
+  var result = await FlutterImageCompress.compressAndGetFile(
+    image.absolute.path,
+    targetPath,
+    quality: 50,
+  );
+
+  File compressedFile = File(result!.path);
+
+  return compressedFile;
+ 
+}
+
 
   Future<void> _fetchMessages() async {
     try {
@@ -182,8 +208,10 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
               final pickedFile =
                   await _imagePicker.pickImage(source: ImageSource.gallery);
               if (pickedFile != null) {
+                File selectedFile = File(pickedFile.path);
+      File compressedFile = await _compressImage(selectedFile);
                 setState(() {
-                  _selectedImage = File(pickedFile.path);
+                  _selectedImage = compressedFile;
                 });
               }
             },
