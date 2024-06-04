@@ -8,6 +8,6 @@ const Color primaryGreen = Color(0xFF71c799);
 const Color background = Color.fromARGB(255, 255, 255, 255);
 const Color onbordingColor = Color(0xFFBDBDBD);
 const Color onboardingTextDoneColor = Color.fromARGB(255, 0, 0, 2);
-const Color selectedPageColor = Color(0xFFebab01);
+const Color selectedPageColor = Color(0xFFEBAB01);
 const Color textColor = Color.fromARGB(255, 177, 172, 229);
 const Color selectedColor = Color.fromARGB(255, 177, 172, 229);

@@ -114,7 +114,7 @@ final bottomNavIndexProvider =
 );
 
 typedef _$bottomNavIndex = AutoDisposeNotifier<int>;
-String _$userIdHash() => r'15b59c24f0b70520e2b32e8f771493fa6470c55d';
+String _$userIdHash() => r'9e26ecb63696053f42a2f689ea3ffd0da7d56d69';
 
 /// See also [UserId].
 @ProviderFor(UserId)
@@ -128,5 +128,34 @@ final userIdProvider = AutoDisposeNotifierProvider<UserId, int>.internal(
 );
 
 typedef _$UserId = AutoDisposeNotifier<int>;
+String _$userTypeHash() => r'5cc35347eec937b0a614aa921416d45b3f9cc5b5';
+
+/// See also [userType].
+@ProviderFor(userType)
+final userTypeProvider = AutoDisposeNotifierProvider<userType, String>.internal(
+  userType.new,
+  name: r'userTypeProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$userTypeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$userType = AutoDisposeNotifier<String>;
+String _$userTokenHash() => r'8e8a04be4ccd61e9ea9dd857f9adc943fefe40cc';
+
+/// See also [userToken].
+@ProviderFor(userToken)
+final userTokenProvider =
+    AutoDisposeNotifierProvider<userToken, String>.internal(
+  userToken.new,
+  name: r'userTokenProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$userTokenHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$userToken = AutoDisposeNotifier<String>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

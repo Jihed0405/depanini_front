@@ -1,9 +1,12 @@
 import 'package:depanini/provider/provider.dart';
-import 'package:depanini/routes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:depanini/views/chat/chat_view.dart';
+import 'package:depanini/views/home/home_view.dart';
+import 'package:depanini/views/profile/profile_view.dart';
+import 'package:depanini/views/search/search_view.dart';
 class MainLayout extends ConsumerStatefulWidget {
   final Widget? nestedView;
   const MainLayout({Key? key, this.nestedView}) : super(key: key);
@@ -36,7 +39,21 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
   @override
   Widget build(BuildContext context) {
     final bottomNavIndex = ref.watch(bottomNavIndexProvider);
-
+    print("the type is ${ref.watch(userTypeProvider)}");
+    final isClient = ref.watch(userTypeProvider) == 'CLIENT';
+    print(isClient);
+    List<Widget> navItems = [
+      if (isClient) Icon(Icons.home_outlined, size: 30, color: Colors.white),
+      if (isClient) Icon(Icons.search_outlined, size: 30, color: Colors.white),
+      Icon(Icons.messenger_outline, size: 30, color: Colors.white),
+      Icon(Icons.perm_identity_sharp, size: 30, color: Colors.white),
+    ];
+    final List<Widget> screens = [
+   if (isClient) HomeView(),
+   if (isClient) SearchView(),
+  ChatView(),
+  ProfileView()
+];
     return Scaffold(
       body: widget.nestedView ??
           IndexedStack(
@@ -46,12 +63,7 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
       bottomNavigationBar: CurvedNavigationBar(
         index: bottomNavIndex,
         height: 60.0,
-        items: <Widget>[
-          Icon(Icons.home_outlined, size: 30, color: Colors.white),
-          Icon(Icons.search_outlined, size: 30, color: Colors.white),
-          Icon(Icons.messenger_outline, size: 30, color: Colors.white),
-          Icon(Icons.perm_identity_sharp, size: 30, color: Colors.white),
-        ],
+        items: navItems,
         color: Color(0xFFebab01),
         buttonBackgroundColor: Colors.black,
         backgroundColor: Colors.transparent,

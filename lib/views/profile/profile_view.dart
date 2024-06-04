@@ -3,11 +3,13 @@ import 'package:depanini/constants/color.dart';
 import 'package:depanini/constants/size.dart';
 import 'package:depanini/controllers/profile_controller.dart';
 import 'package:depanini/models/user.dart';
+import 'package:depanini/views/authentication/login_page.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:depanini/widgets/profile_account_info_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:depanini/provider/provider.dart';
+import 'package:depanini/services/authenticationApi.dart';
 class ProfileView extends ConsumerStatefulWidget {
   const ProfileView({super.key});
 
@@ -18,15 +20,21 @@ class ProfileView extends ConsumerStatefulWidget {
 class _ProfileViewState extends ConsumerState<ProfileView> {
   final ProfileController _profileController = ProfileController();
   late Future<User> _userServiceFuture;
-
+  final AuthenticationApi _authenticationApi = AuthenticationApi();
   @override
   void initState() {
     super.initState();
     
   }
-
+Future<void> _logout() async {
+    await _authenticationApi.logoutUser(ref);
+    // Navigate to login screen after logout
+ 
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
+  }
   @override
   Widget build(BuildContext context) {
+    print("the useridd is ${ref.watch(userIdProvider)}");
     _userServiceFuture = Future.delayed(
         Duration(seconds: 2), () => _profileController.getUserById(ref.watch(userIdProvider)));
     return Scaffold(
@@ -34,6 +42,10 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: background,
+        actions: [ IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: _logout,
+          ),],
       ),
       body: FutureBuilder<User>(
         future: _userServiceFuture,

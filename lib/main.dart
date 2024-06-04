@@ -1,3 +1,4 @@
+import 'package:depanini/views/authentication/login_page.dart';
 import 'package:depanini/widgets/onBoarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,6 +33,6 @@ class _MyAppState extends State<MyApp> {
                   fontWeight: FontWeight.w500,
                   color: Colors.black)),
         ),
-        home: onBoarding());
+        home: LoginPage());
   }
 }
