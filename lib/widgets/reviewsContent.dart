@@ -76,14 +76,18 @@ late List<Rating> clientRatings = [];
             }
 
             int totalReviewsClient = clientRatings.length;
+        if (totalReviewsClient > 0) {
+
             double averageWorkRating = totalWorkRating / totalReviewsClient;
             double averageDisciplineRating = totalDisciplineRating / totalReviewsClient;
             double averageCostRating = totalCostRating / totalReviewsClient;
+          
             overallRating = _controller.calculateOverallRating(
-                averageWorkRating.round(), averageDisciplineRating.round(), averageCostRating.round());
+                averageWorkRating!.round(), averageDisciplineRating!.round(), averageCostRating!.round());
    int totalReviews = _allRatings.length;
            return _buildRatingCard(overallRating,totalReviews,averageWorkRating,averageDisciplineRating,averageCostRating,ratingList );
-          }
+         }
+         else return _buildRatingCard(0,0,0,0,0,ratingList ); }
         },
       ),
     );

@@ -77,6 +77,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               ElevatedButton(
                 onPressed: () async {
                   try {
+                    print(_passwordController.text);
                     final result = await _authenticationApi.signIn(
                         _usernameController.text, _passwordController.text);
                     final jwtToken = result['token'];
